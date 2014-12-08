@@ -1,0 +1,24 @@
+<Alloy>
+	<View id="guida">
+		<View class="mainContainer">
+			<View class="listdetail">
+				<View id="guidaHeader" class="subHeader">
+					<View class="subIcon" id="subIconGuida"></View>
+					<View class="backIcon" id="backIconGuida" onClick="back"></View>
+					<Label class="subTitle" id="subTitleGuida">Guida</Label>
+				</View>
+				<ScrollableView class="pages" id="pagesGuida" scrollingEnabled="false">
+					<TableView class="list">
+						<TableViewRow class="listItem" hasChild="true" title="Cosa sono" onClick="openCosa"></TableViewRow>
+						<TableViewRow class="listItem" hasChild="true" title="Sintomi" onClick="openSintomi"></TableViewRow>
+						<TableViewRow class="listItem" hasChild="true" title="Cause" onClick="openCause"></TableViewRow>
+					</TableView>
+					<ScrollView  class="detail" id="detailGuida">
+						<ImageView class="detailImage" id="detailImageGuida"></ImageView>
+						<Label class="detailText" id="detailTextGuida"></Label>
+					</ScrollView>
+				</ScrollableView>
+			</View>
+		</View>
+	</View>
+</Alloy>

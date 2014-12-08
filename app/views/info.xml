@@ -1,0 +1,24 @@
+<Alloy>
+	<View id="info">
+		<View class="mainContainer">
+			<View class="listdetail">
+				<View id="infoHeader" class="subHeader">
+					<View class="subIcon" id="subIconInfo"></View>
+					<Label class="subTitle" id="subTitleInfo">Info</Label>
+				</View>
+				<ScrollView class="detail" backgroundColor="#ededed">
+					<Label class="textTitle">Disclaimer</Label>
+					<Label class="textContent">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Label>
+					<Label class="textTitle">Credits</Label>
+					
+					<ImageView class="textLogo" image="/images/logo-dsp.png" onClick="linkDsp"></ImageView>
+					<Label class="textContent">Produzione</Label>
+					<ImageView class="textLogo" image="/images/logo-leon.png" onClick="linkLeon"></ImageView>
+					<Label class="textContent">Sviluppo</Label>
+					<ImageView class="textLogo" image="/images/logo-tf.png"  onClick="linkTf"></ImageView>
+					<Label class="textContent">Concept</Label>
+				</ScrollView>
+			</View>
+		</View>
+	</View>
+</Alloy>

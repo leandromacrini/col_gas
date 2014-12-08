@@ -1,0 +1,17 @@
+"#info": {
+	backgroundColor : "#fff"
+},
+	"#infoHeader": {
+		backgroundColor : "#6FB52B"
+	},
+		"#subIconInfo":{
+			backgroundImage : "/images/icon-faq.png"
+		},
+		".subHeader":{
+			height:100,
+		},
+		".detail": {
+			top: 110,
+			bottom : 0
+		}
+		

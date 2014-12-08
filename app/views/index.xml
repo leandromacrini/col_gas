@@ -1,0 +1,26 @@
+<Alloy>
+	<Window id="index">
+		<View class="header">
+			<View class="home" id="homeButton" onClick="closeSubView"></View>
+			<View class="logo"></View>
+		</View>
+		<View id="container">
+			<View id="btnCalendario" onClick="openCalendario" class="homeButton">
+				<View class="homeIcon" id="iconCalendario"></View>
+				<Label class="homeLabel">CALENDARIO</Label>
+			</View>
+			<View id="btnGuida" onClick="openGuida" class="homeButton">
+				<View class="homeIcon" id="iconGuida"></View>
+				<Label class="homeLabel">GUIDA</Label>
+			</View>
+			<View id="btnRimedi" onClick="openRimedi" class="homeButton">
+				<View class="homeIcon" id="iconRimedio"></View>
+				<Label class="homeLabel">RIMEDI</Label>
+			</View>
+			<View id="btnCredits" onClick="openInfo" class="homeButton">
+				<View class="homeIcon" id="iconFaq"></View>
+				<Label class="homeLabel">INFO</Label>
+			</View>
+		</View>
+	</Window>
+</Alloy>

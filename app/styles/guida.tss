@@ -1,0 +1,14 @@
+"#guida": {
+	backgroundColor : "#fff"
+},
+	"#guidaHeader": {
+		backgroundColor : "#A3AED1"
+	},
+		"#subIconGuida":{
+			backgroundImage : "/images/icon-guida.png"
+		},
+		
+	".listItem":{
+		color : "#A3AED1",
+		font:{ fontSize: 28, fontWeight: "bold"}
+	}

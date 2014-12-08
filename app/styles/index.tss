@@ -1,0 +1,60 @@
+"#index": {
+	backgroundColor:"#fff",
+	exitOnClose : "true"
+}
+	"#container": {
+		top: 60,
+		left : 10,
+		right : 10,
+		bottom : 10
+	}
+
+		"#btnCalendario": {
+			top : 0,
+			height: "60%",
+			left : 0,
+			right : 0,
+			backgroundColor: "#FFE333",
+			backgroundImage: "/images/bg1.png"
+		}
+			"#iconCalendario": {
+				width: 100,
+				height: 100,
+				backgroundImage : "/images/icon-calendar.png"
+			}
+		
+		"#btnGuida": {
+			top : "65%",
+			height: "35%",
+			width: "30%",
+			left : 0,
+			backgroundColor: "#A3AED1",
+			backgroundImage: "/images/bg2.png"
+		}
+			"#iconGuida": {
+				backgroundImage : "/images/icon-guida.png"
+			}
+		
+		"#btnRimedi": {
+			top : "65%",
+			height: "35%",
+			width: "30%",
+			left : "35%",
+			backgroundColor: "#E46A74",
+			backgroundImage: "/images/bg3.png"
+		}
+			"#iconRimedio": {
+				backgroundImage : "/images/icon-rimedi.png"
+			}
+		
+		"#btnCredits": {
+			top : "65%",
+			height: "35%",
+			width: "30%",
+			right : 0,
+			backgroundColor: "#6FB52B",
+			backgroundImage: "/images/bg4.png"
+		}
+			"#iconFaq": {
+				backgroundImage : "/images/icon-faq.png"
+			}

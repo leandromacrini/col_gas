@@ -1,0 +1,7 @@
+<Alloy>
+	<View id="calendario">
+		<View id="mainContainer">
+			<View id="container"></View>
+		</View>
+	</View>
+</Alloy>

@@ -1,0 +1,13 @@
+"#rimedi": {
+	backgroundColor : "#fff"
+},
+	"#rimediHeader": {
+		backgroundColor : "#E46A74"
+	},
+		"#subIconRimedi":{
+			backgroundImage : "/images/icon-rimedi.png"
+		},
+	".listItem":{
+		color : "#E46A74",
+		font:{ fontSize: 26, fontWeight: "bold"}
+	}

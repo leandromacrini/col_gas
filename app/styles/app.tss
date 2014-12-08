@@ -1,0 +1,136 @@
+".header": {
+	top : 0,
+	height : 50,
+	left : 0,
+	right : 0,
+	backgroundColor : "#f5866c"
+},
+	".home": {
+		visible : false,
+		width : 25,
+		height: 25,
+		left: 5,
+		bottom: 5,
+		backgroundImage: "/images/icon-home.png"
+	},
+	
+	".logo": {
+		backgroundImage : "/images/logo.png",
+		bottom: 5,
+		width : 180,
+		height: 20
+	},
+	
+	".mainContainer": {
+		backgroundColor: "#FFF"
+	},
+
+		".listdetail":{
+			top: 0,
+			left : 0,
+			right : 0,
+			bottom : 0
+		},
+		
+			".subHeader":{
+				height:100,
+				top :0
+			},
+				".subIcon":{
+					left: 10,
+					width: 70,
+					height: 70
+				},
+				
+				".backIcon":{
+					left: 10,
+					width: 25,
+					height: 40,
+					backgroundImage : "/images/arrow-back.png",
+					visible : false
+				},
+				
+				".subTitle":{
+					color: "#FFF",
+					font:{ fontSize: 30, fontWeight: "bold"}
+				},
+	
+	
+		".pages": {
+			top: 100,
+			bottom : 0
+		},
+			".list":{
+				separatorColor : "transparent"
+			},
+			
+			".detail": {
+				layout: "vertical",
+				scrollType : "vertical"
+			},
+				".detailImage":{
+					top: 10,
+					width: "100%"
+				},
+				
+				".detailText": {
+					top: 5,
+					width : "95%",
+					color: "#999",
+					font:{ fontSize: 20}
+				},
+
+"Label": {
+	width: Ti.UI.SIZE,
+	height: Ti.UI.SIZE,
+	font:{ fontSize: 16},
+	color: "#000"
+},
+
+"TableViewRow": {
+	height : 75,
+	font:{ fontSize: 22},
+	color: "#000"
+},
+
+".homeButton": {
+	borderRadius : 3,
+	backgroundImage : "none",
+	backgroundSelectedImage : "none"
+},
+	".homeIcon": {
+		width: 70,
+		height: 70,
+		backgroundColor: "transparent",
+		touchEnabled: "false"
+	},
+	".homeLabel": {
+		color: "#FFF",
+		font:{ fontSize: 18, fontWeight: "bold"},
+		center: {x:"50%", y: "80%"}
+	},
+
+".textTitle": {
+	top: 10,
+	width: "100%",
+	textAlign: "center",
+	font:{ fontSize: 20, fontWeight: "bold"},
+},
+
+".textContent": {
+	top: 10,
+	width: "100%",
+	textAlign: "center",
+	font:{ fontSize: 18 }
+},
+".textSmallContent": {
+	top: 10,
+	width: "100%",
+	textAlign: "center",
+	color: "#999",
+	font:{ fontSize: 14 }
+},
+".textLogo": {
+	top: 10,
+	width: "100%"
+}

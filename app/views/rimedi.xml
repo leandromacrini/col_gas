@@ -1,0 +1,28 @@
+<Alloy>
+	<View id="rimedi">
+		<View class="mainContainer">
+			<View class="listdetail">
+				<View id="rimediHeader" class="subHeader">
+					<View class="subIcon" id="subIconRimedi"></View>
+					<View class="backIcon" id="backIconRimedi" onClick="back"></View>
+					<Label class="subTitle" id="subTitleRimedi">Rimedi</Label>
+				</View>
+				<ScrollableView class="pages" id="pagesRimedi" scrollingEnabled="false">
+					<TableView class="list">
+						<TableViewRow class="listItem" hasChild="true" title="Cosa fare" onClick="openCosaFare"></TableViewRow>
+						<TableViewRow class="listItem" hasChild="true" title="Cosa non fare" onClick="openNonFare"></TableViewRow>
+						<TableViewRow class="listItem" hasChild="true" title="Cambiare posizione" onClick="openCambiarePosizione"></TableViewRow>
+						<TableViewRow class="listItem" hasChild="true" title="Massaggio" onClick="openMassaggio"></TableViewRow>
+						<TableViewRow class="listItem" hasChild="true" title="Musica dolce" onClick="openMusicaDolce"></TableViewRow>
+						<TableViewRow class="listItem" hasChild="true" title="Movimento" onClick="openMovimento"></TableViewRow>
+						<TableViewRow class="listItem" hasChild="true" title="Probiotici" onClick="openProbiotici"></TableViewRow>
+					</TableView>
+					<ScrollView class="detail" id="detailRimedi">
+						<ImageView class="detailImage" id="detailImageRimedi"></ImageView>
+						<Label class="detailText" id="detailTextRimedi"></Label>
+					</ScrollView>
+				</ScrollableView>
+			</View>
+		</View>
+	</View>
+</Alloy>

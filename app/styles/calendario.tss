@@ -1,0 +1,6 @@
+"#calendario": {
+	backgroundColor : "#fff"
+}
+	"#container": {
+		top: 0
+	}
