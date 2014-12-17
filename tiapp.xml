@@ -23,9 +23,6 @@
                 <key>UISupportedInterfaceOrientations~ipad</key>
                 <array>
                     <string>UIInterfaceOrientationPortrait</string>
-                    <string>UIInterfaceOrientationPortraitUpsideDown</string>
-                    <string>UIInterfaceOrientationLandscapeLeft</string>
-                    <string>UIInterfaceOrientationLandscapeRight</string>
                 </array>
                 <key>UIRequiresPersistentWiFi</key>
                 <false/>
@@ -45,14 +42,6 @@
             <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="16"/>
         </manifest>
     </android>
-    <mobileweb>
-        <precache/>
-        <splash>
-            <enabled>true</enabled>
-            <inline-css-images>true</inline-css-images>
-        </splash>
-        <theme>default</theme>
-    </mobileweb>
     <modules/>
     <deployment-targets>
         <target device="android">true</target>

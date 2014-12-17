@@ -3,5 +3,10 @@
 		<View id="mainContainer">
 			<View id="container"></View>
 		</View>
+		<View id="bottomContainer">
+			<View class="btnCalendar" id="btnSintomo" onClick="openSintomo"></View>
+			<View class="btnCalendar" id="btnAvvisi" onClick="openAvviso"></View>
+			<View class="btnCalendar" id="btnVisita" onClick="openVisita"></View>
+		</View>
 	</View>
 </Alloy>

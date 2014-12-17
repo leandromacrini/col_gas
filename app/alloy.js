@@ -9,3 +9,25 @@
 // object. For example:
 //
 // Alloy.Globals.someGlobalFunction = function(){};
+
+Alloy.Globals.blinkButton = function(ea){
+	ea.source.opacity = 0;
+	setTimeout(function(){
+		ea.source.opacity = 1;
+	}, 50);
+};
+
+//init libraries
+var moment = require('/lib/moment');
+moment.lang('it');
+
+//init model and DB
+require("/models/BaseModel").init();
+	
+require("/models/UserData").init();
+require("/models/Pill").init();
+require("/models/PillAlert").init();
+require("/models/Appointment").init();
+require("/models/Symptom").init();
+
+Ti.UI.iPhone.appBadge = 0;

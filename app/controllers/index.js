@@ -11,11 +11,12 @@ var openAnimation = Ti.UI.createAnimation({
 });
 
 function openSubView(view){
-	currentView = view;
+	currentView = view.getView();
 	currentView.transform = Titanium.UI.create2DMatrix().scale(0);
 	$.container.add(currentView);
 	currentView.animate(openAnimation);
 	$.homeButton.show();
+	view.open();
 }
 
 function closeSubView(){
@@ -29,19 +30,27 @@ function closeSubView(){
 }
 
 function openCalendario(ea){
-	openSubView(calendario.getView());
+	openSubView(calendario);
 }
 
 function openGuida(ea){
-	openSubView(guida.getView());
+	openSubView(guida);
 }
 
 function openRimedi(ea){
-	openSubView(rimedi.getView());
+	openSubView(rimedi);
 }
 
 function openInfo(ea){
-	openSubView(info.getView());
+	openSubView(info);
 }
 
 $.index.open();
+
+Ti.App.addEventListener("vls:hideHomeButton", function(ea){
+	$.homeButton.hide();
+});
+
+Ti.App.addEventListener("vls:showHomeButton", function(ea){
+	$.homeButton.show();
+});

@@ -35,3 +35,5 @@ function openCause(){
 	$.detailImageGuida.image = "/images/baby-3.jpg";
 	$.detailTextGuida.text = "Ad oggi le cause delle coliche gassose non sono del tutto note, ma recenti studi hanno ipotizzato un coinvolgimento della microflora intestinale (meno diversificata e con una minore conta di lattobacilli) come causa del dolore e degli altri sintomi che provocano il pianto del bambino.";
 };
+
+this.open = function() { };

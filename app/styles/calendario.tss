@@ -1,6 +1,26 @@
 "#calendario": {
 	backgroundColor : "#fff"
-}
+},
 	"#container": {
 		top: 0
+	},
+"#bottomContainer": {
+	bottom: 0,
+	height : 80
+},
+	".btnCalendar": {
+		height: 70,
+		width: 70,
+	},
+	"#btnSintomo": {
+		center : {x: "20%", y: "50%" },
+		backgroundImage: "/images/icon-sintomo.png"
+	},
+	"#btnAvvisi": {
+		center : {x: "50%", y: "50%" },
+		backgroundImage: "/images/icon-rimedi2.png"
+	},
+	"#btnVisita": {
+		center : {x: "80%", y: "50%" },
+		backgroundImage: "/images/icon-visita.png"
 	}

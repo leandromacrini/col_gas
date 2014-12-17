@@ -1,5 +1,25 @@
+//includes
+var SintomoView = require("/staticViews/SintomoView").SintomoView;
+var AppuntamentoView = require("/staticViews/AppuntamentoView").AppuntamentoView;
+//TODO var AlertView = require("/staticViews/AlertView").AlertView;
+
+var DayListView = require("/staticViews/DayListView").DayListView;
+
+var PillAlert = require('/models/PillAlert');
+var Appointment = require('/models/Appointment');
+var Symptom = require('/models/Symptom');
+
+var that = this; 
+
+this.sintomoView = new SintomoView();
+this.appuntamentoView = new AppuntamentoView();
+//TODO this.alertView = new AlertView();
+
+this.dayListView = new DayListView();
+
 // Taking Screen Width
 var screenWidth = Ti.Platform.displayCaps.platformWidth - 20;
+var smallDisplay = Ti.Platform.displayCaps.platformHeight / Ti.Platform.displayCaps.platformWidth <= 1.5 ? true : false;
 
 var months = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
 
@@ -9,7 +29,7 @@ var animationDuration = 500;
 
 // Tool Bar
 var toolBar = Ti.UI.createView({
-	top : 0,
+	top : smallDisplay? -80 : 0,
 	height : 125,
 	backgroundImage: "/images/calendario.png"
 });
@@ -49,7 +69,7 @@ toolBar.add(nextMonth);
 
 // Tool Bar - Day's
 var toolBarDays = Ti.UI.createView({
-	top : 125,
+	top : smallDisplay? 45 : 125,
 	height : 25,
 	layout : 'horizontal',
 	backgroundColor : "#FFF"
@@ -77,13 +97,61 @@ toolBarDays.add(createDayLabel("DOM", true));
 
 // Adding Tool Bar Title View & Tool Bar Days View
 
+// Function which compute the data associated with a day label
+function computeDayData(dayLabel){
+	var symptoms;
+	var appointments;
+	var alerts;
+	
+	var backgroundImage = "none";
+	
+	if(dayLabel.date){
+		symptoms = Symptom.readSymptomsByDate(dayLabel.date);
+		appointments = Appointment.readAppointmentByDate(dayLabel.date);
+		//alerts = PillAlert.readPillAlertsByDate(dayLabel.date);
+		
+		var type = "";
+		
+		if(appointments) type = "A";
+		if(symptoms) type += "B";
+		if(alerts) type += "C";
+		
+		switch(type){
+			case "AB":
+			case "AC":
+			case "BC":
+			case "ABC":
+				backgroundImage = "/images/bk-multi.png";
+				break;
+			case "A":
+				backgroundImage = "/images/bk-appointment.png";
+				break;
+			case "B":
+				backgroundImage = "/images/bk-symptom.png";
+				break;
+			case "C":
+				backgroundImage = "/images/bk-alert.png";
+				break;
+		}
+	}
+	// change background only if needed because it's a slow UI operation
+	if( _.size(symptoms) != _.size(dayLabel.symptoms) || _.size(appointments) != _.size(dayLabel.appointments) ||_.size(alerts) != _.size(dayLabel.alerts ))
+		dayLabel.backgroundImage = backgroundImage;
+	
+	// erase
+	dayLabel.symptoms = null;
+	dayLabel.appointments = null;
+	dayLabel.alerts = null;
+	
+	// set
+		dayLabel.symptoms = symptoms;
+		dayLabel.appointments = appointments;
+		dayLabel.alerts = alerts;
+};
 
 // Function which create day view template
 dayView = function(e) {
 	var label = Ti.UI.createButton({
-		backgroundColor: "transparent",
-		backgroundImage: "none",
-		backgroundSelectedImage: "none",
 		current : e.current,
 		width : Math.floor(screenWidth / 7),
 		height : Math.floor(screenWidth / 7),
@@ -94,6 +162,9 @@ dayView = function(e) {
 		font:{ fontSize: 22, fontWeight: "bold"},
 		date : e.date
 	});
+	
+	computeDayData(label);
+	
 	return label;
 };
 
@@ -105,7 +176,7 @@ var calView = function(a, b, c) {
 	var mainView = Ti.UI.createView({
 		width : screenWidth,
 		height : screenWidth,
-		top : 150
+		top : smallDisplay? 70 : 150
 	});
 
 	var container = Ti.UI.createView({
@@ -180,10 +251,15 @@ var calView = function(a, b, c) {
 	container.addEventListener('click', function(e) {
 		switch (e.source.current) {
 			case "yes":
-				//open popup
-				/*var detail = Alloy.createController('DailySchedulesPopup', { 
-				    date: e.source.date
-				});*/
+				if(e.source.alerts || e.source.symptoms || e.source.appointments){
+					//open popup
+					that.dayListView.open($.calendario, {
+						alerts : e.source.alerts,
+						symptoms : e.source.symptoms,
+						appointments : e.source.appointments,
+						date : e.source.date
+					});
+				}
 				break;
 			case "prev":
 				goPrev();
@@ -208,34 +284,34 @@ c = setDate.getDate();
 
 // add the three calendar views to the window for changing calendars with animation later
 
-var prevCalendarView = null;
+that.prevCalendarView = null;
 if (b == 0) {
-	prevCalendarView = calView(a - 1, 11, c);
+	that.prevCalendarView = calView(a - 1, 11, c);
 } else {
-	prevCalendarView = calView(a, b - 1, c);
+	that.prevCalendarView = calView(a, b - 1, c);
 }
-prevCalendarView.left = -screenWidth;
+that.prevCalendarView.left = -screenWidth;
 
-var nextCalendarView = null;
+that.nextCalendarView = null;
 if (b == 0) {
-	nextCalendarView = calView(a + 1, 0, c);
+	that.nextCalendarView = calView(a + 1, 0, c);
 } else {
-	nextCalendarView = calView(a, b + 1, c);
+	that.nextCalendarView = calView(a, b + 1, c);
 }
-nextCalendarView.left = screenWidth;
+that.nextCalendarView.left = screenWidth;
 
-var thisCalendarView = calView(a, b, c);
+that.thisCalendarView = calView(a, b, c);
 
-thisCalendarView.left = 0;
+that.thisCalendarView.left = 0;
 
 monthTitle.text = months[b] + ' ' + a;
 
 // add everything to the window
 $.container.add(toolBar);
 $.container.add(toolBarDays);
-$.container.add(thisCalendarView);
-$.container.add(nextCalendarView);
-$.container.add(prevCalendarView);
+$.container.add(that.thisCalendarView);
+$.container.add(that.nextCalendarView);
+$.container.add(that.prevCalendarView);
 
 var slideNext = Titanium.UI.createAnimation({
 	duration : animationDuration,
@@ -283,25 +359,25 @@ var goNext = function() {
 		if( ! OS_ANDROID ) monthTitle.animate(titleUp);
 	}, animationDuration / 2);
 
-	thisCalendarView.animate(slideNext);
-	nextCalendarView.animate(slideReset);
+	that.thisCalendarView.animate(slideNext);
+	that.nextCalendarView.animate(slideReset);
 
 	setTimeout(function() {
-		thisCalendarView.left = -screenWidth;
+		that.thisCalendarView.left = -screenWidth;
 
-		$.container.remove(prevCalendarView);
-		prevCalendarView = null;
+		$.container.remove(that.prevCalendarView);
+		that.prevCalendarView = null;
 
 		//clean old view
-		prevCalendarView = thisCalendarView;
-		thisCalendarView = nextCalendarView;
+		that.prevCalendarView = that.thisCalendarView;
+		that.thisCalendarView = that.nextCalendarView;
 		if (b == 11) {
-			nextCalendarView = calView(a + 1, 0, c);
+			that.nextCalendarView = calView(a + 1, 0, c);
 		} else {
-			nextCalendarView = calView(a, b + 1, c);
+			that.nextCalendarView = calView(a, b + 1, c);
 		}
-		nextCalendarView.left = screenWidth;
-		$.container.add(nextCalendarView);
+		that.nextCalendarView.left = screenWidth;
+		$.container.add(that.nextCalendarView);
 
 		animating = false;
 	}, animationDuration);
@@ -326,25 +402,25 @@ var goPrev = function() {
 		if( ! OS_ANDROID ) monthTitle.animate(titleUp);
 	}, animationDuration / 2);
 
-	thisCalendarView.animate(slidePrev);
-	prevCalendarView.animate(slideReset);
+	that.thisCalendarView.animate(slidePrev);
+	that.prevCalendarView.animate(slideReset);
 
 	setTimeout(function() {
-		thisCalendarView.left = screenWidth;
+		that.thisCalendarView.left = screenWidth;
 
 		//clean old view
-		$.container.remove(nextCalendarView);
-		nextCalendarView = null;
+		$.container.remove(that.nextCalendarView);
+		that.nextCalendarView = null;
 
-		nextCalendarView = thisCalendarView;
-		thisCalendarView = prevCalendarView;
+		that.nextCalendarView = that.thisCalendarView;
+		that.thisCalendarView = that.prevCalendarView;
 		if (b == 0) {
-			prevCalendarView = calView(a - 1, 11, c);
+			that.prevCalendarView = calView(a - 1, 11, c);
 		} else {
-			prevCalendarView = calView(a, b - 1, c);
+			that.prevCalendarView = calView(a, b - 1, c);
 		}
-		prevCalendarView.left = -screenWidth;
-		$.container.add(prevCalendarView);
+		that.prevCalendarView.left = -screenWidth;
+		$.container.add(that.prevCalendarView);
 
 		animating = false;
 	}, animationDuration);
@@ -361,35 +437,42 @@ $.container.addEventListener("swipe", function(e) {
 	else if (e.direction == "left")  goNext();
 });
 
+// events handling
+Ti.App.addEventListener("vls:updateCalendarView", function(ea){
+	Ti.API.info('Updating calendar data');
+	_.each(that.thisCalendarView.children[0].children,computeDayData);
+	_.each(that.prevCalendarView.children[0].children,computeDayData);
+	_.each(that.nextCalendarView.children[0].children,computeDayData); 
+});
+
+Ti.App.addEventListener("vls:openSymptomDetail", function(ea){
+	Ti.API.info('Open detail for: ' + JSON.stringify(ea.item));
+	that.sintomoView.open($.calendario, ea.item);
+});
+
+Ti.App.addEventListener("vls:openAppointmentDetail", function(ea){
+	Ti.API.info('Open detail for: ' + JSON.stringify(ea.item));
+	that.appuntamentoView.open($.calendario, ea.item);
+});
+
+Ti.App.addEventListener("vls:openAlertDetail", function(ea){
+	//TODO that.alertView.open($.calendario, ea.item);
+});
+
 this.open = function() {
-	// show me
-	if(OS_IOS){
-		$.calendario.transform = Titanium.UI.create2DMatrix().scale(0);
-		var a = Ti.UI.createAnimation({
-		    transform : Ti.UI.create2DMatrix().scale(1.1),
-		    duration : 200,
-		});
-		a.addEventListener('complete', function(){
-		    $.calendario.animate({
-		        transform: Ti.UI.create2DMatrix(),
-		        duration: 50
-		    });
-		});
-		$.calendario.open();
-		$.calendario.animate(a);
-	} else {
-		$.calendario.open();
-	}
+	Ti.App.fireEvent("vls:updateCalendarView");
 };
 
-function close() {
-	if(OS_IOS){
-		$.mainContainer.opacity = "1"; //hack
-		$.mainContainer.animate({ opacity : '0', duration : 250});
-		setTimeout(function(){
-			$.calendario.close();
-		},250);
-	} else {
-		$.calendario.close();
-	}
-};
+function openSintomo(ea){
+	Alloy.Globals.blinkButton(ea);
+	that.sintomoView.open($.calendario);
+}
+
+function openAvviso(ea){
+	Alloy.Globals.blinkButton(ea);
+}
+
+function openVisita(ea){
+	Alloy.Globals.blinkButton(ea);
+	that.appuntamentoView.open($.calendario);
+}
