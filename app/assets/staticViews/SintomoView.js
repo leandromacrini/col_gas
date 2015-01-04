@@ -8,6 +8,7 @@
 
 var moment = require('lib/moment');
 moment.lang('it');
+var dialogs = require('alloy/dialogs');
 
 function SintomoView() {
 	var that = this;
@@ -16,6 +17,14 @@ function SintomoView() {
 	var EditDatePopup = require("/staticViews/EditDatePopup").EditDatePopup;
 	
 	this.editDate = new EditDatePopup();
+	
+	this.edited = false;
+	this.setEdited = function(){
+		that.edited = true;
+		if(that.symptom){
+			that.btnOk.title = "SALVA";
+		}
+	};
 	
 	this.pianto;
 	this.rigurgito;
@@ -27,7 +36,7 @@ function SintomoView() {
 	this.optsDurata = {
 		options: Symptom.SymptomDurations,
 		selectedIndex: 0,
-		title: 'Tipologia?'
+		title: 'DURATA?'
 	};
 	this.dialogDurata = Ti.UI.createOptionDialog(that.optsDurata);
 	this.dialogDurata.addEventListener('click', function(ea){
@@ -65,7 +74,7 @@ function SintomoView() {
 		textAlign : Ti.UI.TEXT_ALIGNMENT_CENTER,
 		verticalAlign : Ti.UI.TEXT_VERTICAL_ALIGNMENT_CENTER,
 		color : "#FFF",
-		backgroundColor : "F00",
+		backgroundColor : "#F00",
 		font:{ fontSize: 34, fontWeight: "bold"},
 		text : "SINTOMO"
 	}));
@@ -96,6 +105,7 @@ function SintomoView() {
 	});
 	this.lblDate.addEventListener('singletap', function(ea){
 		that.editDate.open(that.me, that.date, function(value){
+			that.setEdited();
 			that.date = value;
 			that.lblDate.text = moment(value).format("DD/MM/YYYY[ alle ore ]HH:mm");
 		});
@@ -130,6 +140,7 @@ function SintomoView() {
 		right : 25
 	});
 	this.chkPianto.addEventListener('change', function(ea){
+		that.setEdited();
 		that.pianto = ea.value;
 	});
 	this.contanier.add(this.chkPianto);
@@ -150,6 +161,7 @@ function SintomoView() {
 		right : 25
 	});
 	this.chkRigurgito.addEventListener('change', function(ea){
+		that.setEdited();
 		that.rigurgito = ea.value;
 	});
 	this.contanier.add(this.chkRigurgito);
@@ -170,6 +182,7 @@ function SintomoView() {
 		right : 25
 	});
 	this.chkAgitazione.addEventListener('change', function(ea){
+		that.setEdited();
 		that.agitazione = ea.value;
 	});
 	this.contanier.add(this.chkAgitazione);
@@ -200,6 +213,7 @@ function SintomoView() {
 		right : 53
 	});
 	this.lblDuration.addEventListener('singletap', function(ea){
+		that.setEdited();
 		that.dialogDurata.show();
 	});
 	this.contanier.add(this.lblDuration);
@@ -235,7 +249,10 @@ function SintomoView() {
 		width : 40,
 		center : {x : "15%", y : 0}
 	});
-	this.btnIntensity1.addEventListener('singletap', function(){that.setIntensity(1);});
+	this.btnIntensity1.addEventListener('singletap', function(){
+		that.setEdited();
+		that.setIntensity(1);
+	});
 	
 	this.btnIntensity2 = Ti.UI.createView({
 		top: 380,
@@ -244,7 +261,10 @@ function SintomoView() {
 		width : 40,
 		center : {x : "32,5%", y : 0}
 	});
-	this.btnIntensity2.addEventListener('singletap', function(){that.setIntensity(2);});
+	this.btnIntensity2.addEventListener('singletap', function(){
+		that.setEdited();
+		that.setIntensity(2);
+	});
 	
 	this.btnIntensity3 = Ti.UI.createView({
 		top: 380,
@@ -253,7 +273,10 @@ function SintomoView() {
 		width : 40,
 		center : {x : "50%", y : 0}
 	});
-	this.btnIntensity3.addEventListener('singletap', function(){that.setIntensity(3);});
+	this.btnIntensity3.addEventListener('singletap', function(){
+		that.setEdited();
+		that.setIntensity(3);
+	});
 	
 	this.btnIntensity4 = Ti.UI.createView({
 		top: 380,
@@ -262,7 +285,10 @@ function SintomoView() {
 		width : 40,
 		center : {x : "67,5%", y : 0}
 	});
-	this.btnIntensity4.addEventListener('singletap', function(){that.setIntensity(4);});
+	this.btnIntensity4.addEventListener('singletap', function(){
+		that.setEdited();
+		that.setIntensity(4);
+	});
 	
 	this.btnIntensity5 = Ti.UI.createView({
 		top: 380,
@@ -271,7 +297,18 @@ function SintomoView() {
 		width : 40,
 		center : {x : "85%", y : 0}
 	});
-	this.btnIntensity5.addEventListener('singletap', function(){that.setIntensity(5);});
+	this.btnIntensity5.addEventListener('singletap', function(){
+		that.setEdited();
+		that.setIntensity(5);
+	});
+	
+	if(OS_ANDROID){
+		this.btnIntensity1.center = {x : "14%", y : 0};
+		this.btnIntensity2.center = {x : "32%", y : 0};
+		this.btnIntensity3.center = {x : "50%", y : 0};
+		this.btnIntensity4.center = {x : "68%", y : 0};
+		this.btnIntensity5.center = {x : "86%", y : 0};
+	}
 	
 	this.contanier.add(this.btnIntensity1);
 	this.contanier.add(this.btnIntensity2);
@@ -290,6 +327,7 @@ function SintomoView() {
 	this.me.add(this.footer);
 	
 	this.btnOk = Ti.UI.createButton({
+		backgroundImage: "none",
 		height : 50,
 		font:{ fontSize: 24, fontWeight: "bold"},
 		color : '#FFF',
@@ -302,6 +340,7 @@ function SintomoView() {
 	this.footer.add(this.btnOk);
 	
 	this.btnDelete = Ti.UI.createButton({
+		backgroundImage: "none",
 		height : 50,
 		font:{ fontSize: 24, fontWeight: "bold"},
 		color : '#FFF',
@@ -309,7 +348,19 @@ function SintomoView() {
 		title : "ANNULLA"
 	});
 	this.btnDelete.addEventListener("singletap", function(e){
-		that.close(false);
+		if(that.symptom){
+			dialogs.confirm({
+				title: "Conferma richiesta",
+				message: "Questa operazione non può essere annullata. Eliminare il sintomo?",
+				yes: "Si",
+				no: "No",
+				callback : function(){
+					that.close(false);
+				}
+			});
+		} else {
+			that.close(false);
+		}
 	});
 	this.footer.add(this.btnDelete);
 	
@@ -319,12 +370,13 @@ function SintomoView() {
 		Ti.App.fireEvent("vls:hideHomeButton");
 		
 		this.parent = parent;
+		this.edited = false;
 		
 		//new or detail?
 		if(symptom){
 			Ti.API.info('Open symptom: ' + JSON.stringify(symptom));
 			//buttons
-			this.btnOk.title = "SALVA";
+			this.btnOk.title = "CHIUDI";
 			this.btnDelete.title = "ELIMINA";
 			
 			//detail
@@ -337,6 +389,10 @@ function SintomoView() {
 			this.duration = symptom.Duration;
 			this.setIntensity(symptom.Intensity);
 		} else {
+			
+			//new always is edited
+			this.edited = true;
+			
 			Ti.API.info('Open new symptom');
 			//buttons
 			this.btnOk.title = "CREA";
@@ -362,32 +418,40 @@ function SintomoView() {
 		this.lblDuration.text = Symptom.SymptomDurations[this.duration];
 		
 		// show me
-		that.me.opacity = 0; //hack
-		parent.add(this.me);
-				
-		that.me.animate({ opacity : 1, duration : 250});
+		if(OS_IOS){
+			// show me
+			that.me.opacity = 0; //hack
+			parent.add(this.me);
+					
+			that.me.animate({ opacity : 1, duration : 250});
+		} else {
+			parent.add(this.me);
+		}
 	};
 	
 	this.close = function(save){
 		if(save){
 			//new or detail?
-			if(this.symptom) {
-				//save detail
-				this.symptom.Pianto = this.pianto;
-				this.symptom.Rigurgito = this.rigurgito;
-				this.symptom.Agitazione = this.agitazione;
-				this.symptom.When =  moment(this.date).format("DDMMYYYY HH:mm");
-				this.symptom.Duration = this.duration;
-				this.symptom.Intensity = this.intensity;
-				Ti.API.info('Save symptom: ' + JSON.stringify(this.symptom));
+			if(that.symptom) {
+				if(that.edited){
+					//save detail
+					this.symptom.Pianto = this.pianto;
+					this.symptom.Rigurgito = this.rigurgito;
+					this.symptom.Agitazione = this.agitazione;
+					this.symptom.When =  moment(this.date).format("DDMMYYYY HH:mm");
+					this.symptom.Duration = this.duration;
+					this.symptom.Intensity = this.intensity;
+					Ti.API.info('Save symptom: ' + JSON.stringify(this.symptom));
+					this.symptom.save();
+					Ti.App.fireEvent("vls:updateCalendarView");
+				}
 			} else {
 				//create
-				this.symptom = new Symptom.Symptom(this.pianto, this.rigurgito, this.agitazione, this.intensity,  this.date , this.duration);
-				Ti.API.info('Create symptom: ' + JSON.stringify(this.symptom));
+				var simpt = new Symptom.Symptom(this.pianto, this.rigurgito, this.agitazione, this.intensity,  this.date , this.duration);
+				simpt.save();
+				Ti.API.info('Create symptom: ' + JSON.stringify(simpt));
+				Ti.App.fireEvent("vls:updateCalendarView");
 			}
-			
-			this.symptom.save();
-			Ti.App.fireEvent("vls:updateCalendarView");
 		} else if(this.symptom) {
 			//it's a delete
 			Ti.API.info('Delete symptom: ' + JSON.stringify(this.symptom));
@@ -396,20 +460,40 @@ function SintomoView() {
 		}
 		
 		Ti.App.fireEvent("vls:showHomeButton");
-		that.me.animate({ opacity : 0, duration : 250}, function(e){
+		
+		var close = function(e){
 			that.parent.remove(that.me);
 			if(save){
 				//save
-				Ti.UI.createAlertDialog({
-					message : "Il sintomo è stato salvato correttamente"
-				}).show();
+				if(that.symptom){
+					if(that.edited){
+						Ti.UI.createAlertDialog({
+							buttonNames : ["Ok"],
+							message : "Il sintomo è stato salvato correttamente"
+						}).show();
+					}
+				} else {
+					if(that.edited){
+						Ti.UI.createAlertDialog({
+							buttonNames : ["Ok"],
+							message : "Il sintomo è stato creato correttamente"
+						}).show();
+					}
+				}
 			} else if(that.symptom) {
 				//it's a delete
 				Ti.UI.createAlertDialog({
+					buttonNames : ["Ok"],
 					message : "Il sintomo è stato eliminato"
 				}).show();
 			}
-		});
+		};
+		if(OS_IOS){
+			that.me.animate({ opacity : 0, duration : 250}, close);
+		} else {
+			close();
+		}
+		
 	};
 }
 exports.SintomoView = SintomoView;

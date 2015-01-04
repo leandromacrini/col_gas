@@ -37,6 +37,7 @@
     </ios>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
         <manifest>
+        	<supports-screens android:anyDensity="false"/>
             <application android:theme="@style/Theme.NoActionBar"/>
             <!-- Need to specify at least API level 11 for Titanium SDK 3.2.x and prior -->
             <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="16"/>

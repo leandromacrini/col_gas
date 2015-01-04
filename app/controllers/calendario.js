@@ -1,7 +1,8 @@
 //includes
 var SintomoView = require("/staticViews/SintomoView").SintomoView;
 var AppuntamentoView = require("/staticViews/AppuntamentoView").AppuntamentoView;
-//TODO var AlertView = require("/staticViews/AlertView").AlertView;
+var PillReminderView = require('/staticViews/PillReminderView').PillReminderView;
+var PillReminderReadView = require('/staticViews/PillReminderReadView').PillReminderReadView;
 
 var DayListView = require("/staticViews/DayListView").DayListView;
 
@@ -13,7 +14,8 @@ var that = this;
 
 this.sintomoView = new SintomoView();
 this.appuntamentoView = new AppuntamentoView();
-//TODO this.alertView = new AlertView();
+this.alertView = new PillReminderView();
+this.alertReadView = new PillReminderReadView();
 
 this.dayListView = new DayListView();
 
@@ -77,11 +79,11 @@ var toolBarDays = Ti.UI.createView({
 
 createDayLabel = function(day, holiday) {
 	return Ti.UI.createLabel({
-		left : '0',
+		left: 0,
 		text : day,
 		width : "14%", // ~ 100 / 7
 		height : "100%",
-		textAlign : 'center',
+		textAlign : Ti.UI.TEXT_ALIGNMENT_CENTER,
 		font:{ fontSize: 12, fontWeight: "bold"},
 		color : '#000'
 	});
@@ -108,7 +110,7 @@ function computeDayData(dayLabel){
 	if(dayLabel.date){
 		symptoms = Symptom.readSymptomsByDate(dayLabel.date);
 		appointments = Appointment.readAppointmentByDate(dayLabel.date);
-		//alerts = PillAlert.readPillAlertsByDate(dayLabel.date);
+		alerts = PillAlert.readPillAlertsByDate(dayLabel.date);
 		
 		var type = "";
 		
@@ -118,19 +120,25 @@ function computeDayData(dayLabel){
 		
 		switch(type){
 			case "AB":
+				backgroundImage = "/images/bk-vs.png";
+				break;
 			case "AC":
+				backgroundImage = "/images/bk-vr.png";
+				break;
 			case "BC":
+				backgroundImage = "/images/bk-sr.png";
+				break;
 			case "ABC":
-				backgroundImage = "/images/bk-multi.png";
+				backgroundImage = "/images/bk-vsr.png";
 				break;
 			case "A":
-				backgroundImage = "/images/bk-appointment.png";
+				backgroundImage = "/images/bk-v.png";
 				break;
 			case "B":
-				backgroundImage = "/images/bk-symptom.png";
+				backgroundImage = "/images/bk-s.png";
 				break;
 			case "C":
-				backgroundImage = "/images/bk-alert.png";
+				backgroundImage = "/images/bk-r.png";
 				break;
 		}
 	}
@@ -144,20 +152,22 @@ function computeDayData(dayLabel){
 	dayLabel.alerts = null;
 	
 	// set
-		dayLabel.symptoms = symptoms;
-		dayLabel.appointments = appointments;
-		dayLabel.alerts = alerts;
+	dayLabel.symptoms = symptoms;
+	dayLabel.appointments = appointments;
+	dayLabel.alerts = alerts;
 };
 
 // Function which create day view template
 dayView = function(e) {
 	var label = Ti.UI.createButton({
+		backgroundImage: "none",
 		current : e.current,
 		width : Math.floor(screenWidth / 7),
 		height : Math.floor(screenWidth / 7),
+		textAlign : Ti.UI.TEXT_ALIGNMENT_CENTER,
+		verticalAlign : Ti.UI.TEXT_VERTICAL_ALIGNMENT_CENTER,
 		title : e.day,
 		color : e.color,
-		backgroundSelectedImage : '/images/today-circle-grey.png',
 		selectedColor : '#8e959f',
 		font:{ fontSize: 22, fontWeight: "bold"},
 		date : e.date
@@ -221,15 +231,14 @@ var calView = function(a, b, c) {
 		
 		var newDay = new dayView({
 			day : dayNumber,
-			color : date.getDay() ===0 || date.getDay() === 6 ? "red" : '#3a4756',
+			color : date.getDay() ===0 || date.getDay() === 6 ? "#f5866c" : '#3a4756',
 			current : 'yes',
 			dayOfMonth : dayOfMonth,
 			date : date
 		});
 		container.add(newDay);
 		if (newDay.title == dayOfMonth && currentMonth && currentYear) {
-			newDay.color = "green";
-			newDay.backgroundImage='/images/today-circle.png';
+			newDay.color = "#3af";
 		}
 		dayNumber++;
 	}
@@ -249,6 +258,7 @@ var calView = function(a, b, c) {
 	// this is the new "clicker" function, although it doesn't have a name anymore, it just is.
 
 	container.addEventListener('click', function(e) {
+		Ti.API.info('Container clicked: ' + JSON.stringify(e.source));
 		switch (e.source.current) {
 			case "yes":
 				if(e.source.alerts || e.source.symptoms || e.source.appointments){
@@ -456,7 +466,7 @@ Ti.App.addEventListener("vls:openAppointmentDetail", function(ea){
 });
 
 Ti.App.addEventListener("vls:openAlertDetail", function(ea){
-	//TODO that.alertView.open($.calendario, ea.item);
+	that.alertReadView.open($.calendario, ea.item);
 });
 
 this.open = function() {
@@ -470,6 +480,7 @@ function openSintomo(ea){
 
 function openAvviso(ea){
 	Alloy.Globals.blinkButton(ea);
+	that.alertView.open($.calendario);
 }
 
 function openVisita(ea){

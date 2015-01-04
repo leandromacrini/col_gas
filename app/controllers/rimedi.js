@@ -33,7 +33,7 @@ function openNonFare(){
 		width : "95%",
 		color: "#999",
 		font:{ fontSize: 20},
-		text: "Non superalimentare il bambino: alcuni genitori sono convinti che il loro bambino sia “sempre affamato” e “mai  soddisfatti”."
+		text: "Non superalimentare il bambino: alcuni genitori sono convinti che il loro bambino sia “sempre affamato” e “mai soddisfatto”."
 	}));
 	
 	$.detailRimedi.add(Ti.UI.createLabel({
@@ -43,7 +43,7 @@ function openNonFare(){
 		font:{ fontSize: 20},
 		text: "L'uso di sondini rettali e termometri nel tentativo di favorire l'eliminazione dell'aria intestinale è sconsigliabile perché provoca solo irritazione nel bambino."
 	}));
-	
+	/*
 	$.detailRimedi.add(Ti.UI.createLabel({
 		top: 10,
 		width : "95%",
@@ -51,7 +51,7 @@ function openNonFare(){
 		font:{ fontSize: 20},
 		text: "Ricorrere al trattamento farmacologico (probiotici, antispastici e antimeteorici) solo dopo aver consultato il proprio Pediatra, che va interpellato anche quando le coliche gassose si ripetono con una certa frequenza e gravità."
 	}));
-	
+	*/
 	$.pagesRimedi.scrollToView(1);
 };
 function openCosaFare(){
@@ -88,7 +88,7 @@ function openCosaFare(){
 		width : "95%",
 		color: "#999",
 		font:{ fontSize: 20},
-		text: "Attuare terapie posizionali (vedi) come per esempio porre il bambino a pancia sotto e battendogli lievemente sul dorso, o in posizione supina massaggiandogli delicatamente l’addome."
+		text: "Attuare terapie posizionali (vedi) come, ad esempio, tenere il bambino a pancia sotto dando leggeri colpetti sul dorso o in posizione supina massaggiando delicatamente l’addome."
 	}));
 	
 	$.detailRimedi.add(Ti.UI.createLabel({

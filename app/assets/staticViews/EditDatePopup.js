@@ -98,8 +98,16 @@ function EditDatePopup(){
 		
 		if(OS_ANDROID) that.pickerTime.value = dateValue;
 		
-		parent.add(that.me);
-		that.me.animate({ opacity : 1, duration : 150});
+		// show me
+		if(OS_IOS){
+			// show me
+			that.me.opacity = 0; //hack
+			parent.add(this.me);
+					
+			that.me.animate({ opacity : 1, duration : 250});
+		} else {
+			parent.add(this.me);
+		}
 	};
 	
 	this.close = function(save){
@@ -119,9 +127,13 @@ function EditDatePopup(){
 			}
 			if(that.callback) that.callback(value);
 		}
-		that.me.animate({ opacity : 0, duration : 150}, function(e){
+		if(OS_IOS){
+			that.me.animate({ opacity : 0, duration : 150}, function(e){
+				that.parent.remove(that.me);
+			});
+		} else {
 			that.parent.remove(that.me);
-		});
+		}
 	};}
 
 exports.EditDatePopup = EditDatePopup;

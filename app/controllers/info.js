@@ -10,4 +10,6 @@ function linkTf(){
 	Ti.Platform.openURL("http://thinkflamingo.weebly.com");
 }
 
-this.open = function() { };
+this.open = function() {
+	$.info.opacity = 1;
+};

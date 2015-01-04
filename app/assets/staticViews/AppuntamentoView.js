@@ -8,6 +8,7 @@
 
 var moment = require('lib/moment');
 moment.lang('it');
+var dialogs = require('alloy/dialogs');
 
 function AppuntamentoView() {
 	var that = this;
@@ -16,6 +17,14 @@ function AppuntamentoView() {
 	var EditDatePopup = require("/staticViews/EditDatePopup").EditDatePopup;
 	
 	this.editDate = new EditDatePopup();
+	
+	this.edited = false;
+	this.setEdited = function(){
+		that.edited = true;
+		if(that.appointment){
+			that.btnOk.title = "SALVA";
+		}
+	};
 	
 	this.date;
 	this.note;
@@ -69,6 +78,7 @@ function AppuntamentoView() {
 		right : 53
 	});
 	this.lblDate.addEventListener('singletap', function(ea){
+		that.setEdited();
 		that.editDate.open(that.me, that.date, function(value){
 			that.date = value;
 			that.lblDate.text = moment(value).format("DD/MM/YYYY[ alle ore ]HH:mm");
@@ -113,6 +123,10 @@ function AppuntamentoView() {
 		left : 25,
 		right : 25
 	});
+	this.txfNote.addEventListener("change", function(){
+		Ti.API.info('Info text changed');
+		that.setEdited();
+	});
 	this.contanier.add(this.txfNote);
 	
 	//footer
@@ -126,6 +140,7 @@ function AppuntamentoView() {
 	this.me.add(this.footer);
 	
 	this.btnOk = Ti.UI.createButton({
+		backgroundImage: "none",
 		height : 50,
 		font:{ fontSize: 24, fontWeight: "bold"},
 		color : '#FFF',
@@ -138,6 +153,7 @@ function AppuntamentoView() {
 	this.footer.add(this.btnOk);
 	
 	this.btnDelete = Ti.UI.createButton({
+		backgroundImage: "none",
 		height : 50,
 		font:{ fontSize: 24, fontWeight: "bold"},
 		color : '#FFF',
@@ -145,7 +161,19 @@ function AppuntamentoView() {
 		title : "ANNULLA"
 	});
 	this.btnDelete.addEventListener("singletap", function(e){
-		that.close(false);
+		if(that.appointment){
+			dialogs.confirm({
+				title: "Conferma richiesta",
+				message: "Questa operazione non può essere annullata. Eliminare l'appuntamento?",
+				yes: "Si",
+				no: "No",
+				callback : function(){
+					that.close(false);
+				}
+			});
+		} else {
+			that.close(false);
+		}
 	});
 	this.footer.add(this.btnDelete);
 	
@@ -155,12 +183,13 @@ function AppuntamentoView() {
 		Ti.App.fireEvent("vls:hideHomeButton");
 		
 		this.parent = parent;
+		this.edited = false;
 		
 		//new or detail?
 		if(appointment){
 			Ti.API.info('Open appointment: ' + JSON.stringify(appointment));
 			//buttons
-			this.btnOk.title = "SALVA";
+			this.btnOk.title = "CHIUDI";
 			this.btnDelete.title = "ELIMINA";
 			
 			//detail
@@ -170,6 +199,10 @@ function AppuntamentoView() {
 			this.date = moment(appointment.When, "DDMMYYYY HH:mm").toDate();
 		} else {
 			Ti.API.info('Open new appointment');
+			
+			//new always is edited
+			this.edited = true;
+			
 			//buttons
 			this.btnOk.title = "CREA";
 			this.btnDelete.title = "ANNULLA";
@@ -197,18 +230,20 @@ function AppuntamentoView() {
 		if(save){
 			//new or detail?
 			if(this.appointment) {
-				//save detail
-				this.appointment.When = moment(this.date).format("DDMMYYYY HH:mm");
-				this.appointment.Info = this.txfNote.value;
-				Ti.API.info('Save appointment: ' + JSON.stringify(this.appointment));
+				if(this.edited){
+					//save detail
+					this.appointment.When = moment(this.date).format("DDMMYYYY HH:mm");
+					this.appointment.Info = this.txfNote.value;
+					Ti.API.info('Save appointment: ' + JSON.stringify(this.appointment));
+					this.appointment.save();
+					Ti.App.fireEvent("vls:updateCalendarView");
+				}
 			} else {
 				//create
-				this.appointment = new Appointment.Appointment(this.txfNote.value, this.date);
+				new Appointment.Appointment(this.txfNote.value, this.date).save();
 				Ti.API.info('Create appointment: ' + JSON.stringify(this.appointment));
+				Ti.App.fireEvent("vls:updateCalendarView");
 			}
-			
-			this.appointment.save();
-			Ti.App.fireEvent("vls:updateCalendarView");
 		} else if (this.appointment) {
 			//it's a delete
 			Ti.API.info('Delete appointment: ' + JSON.stringify(this.appointment));
@@ -221,12 +256,25 @@ function AppuntamentoView() {
 			that.parent.remove(that.me);
 			if(save){
 				//save
-				Ti.UI.createAlertDialog({
-					message : "L'appuntamento è stato salvato correttamente"
-				}).show();
+				if(that.appointment){
+					if(that.edited){
+						Ti.UI.createAlertDialog({
+							buttonNames : ["Ok"],
+							message : "L'appuntamento è stato salvato correttamente"
+						}).show();
+					}
+				} else {
+					if(that.edited){
+						Ti.UI.createAlertDialog({
+							buttonNames : ["Ok"],
+							message : "L'appuntamento è stato creato correttamente"
+						}).show();
+					}
+				}
 			} else if(that.appointment) {
 				//it's a delete
 				Ti.UI.createAlertDialog({
+							buttonNames : ["Ok"],
 					message : "L'appuntamento è stato eliminato"
 				}).show();
 			}

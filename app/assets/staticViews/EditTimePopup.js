@@ -1,25 +1,22 @@
 // 
-//  EditDateOnlyPopup.js
-//  VooDoc
+//  EditTimePopup.js
+//  Coliche Gassose
 //  
-//  Created by Leandro Macrini on 2014-07-21.
+//  Created by Leandro Macrini on 2014-12-21.
 //  Copyright 2014 Leandro Macrini. All rights reserved.
 // 
 
 var moment = require('lib/moment');
 moment.lang('it');
 
-function EditDateOnlyPopup(){
+function EditTimePopup(){
 	var that = this;
 	
-	var UserData = require("/Model/UserData");
-	
 	this.me = Ti.UI.createView({
-		top : '100%',
-		height: '100%',
+		top : 0,
+		bottom : 0,
 		left : 0,
 		right : 0,
-		zIndex : 130,
 		backgroundColor : "#FFF"
 	});
 	
@@ -37,65 +34,54 @@ function EditDateOnlyPopup(){
 	}
 
 	this.pickerTime = Ti.UI.createPicker({
-		type : Ti.UI.PICKER_TYPE_DATE,
+		type : Ti.UI.PICKER_TYPE_TIME,
+		value : moment().toDate(),
 		color : "#000",
 		width : "100%",
 		format24 : true
 	});
 	
 	this.container.add(this.pickerTime);
-	
+		
 	//footer
 	this.footer = Ti.UI.createView({
 		bottom : 0,
-		height : 70,
+		height : 60,
 		left : 0,
 		right : 0,
-		opacity : 0.75,
-		backgroundColor : "#ccc"
+		backgroundColor : "#f5866c"
 	});
 	this.me.add(this.footer);
 	
 	this.btnOk = Ti.UI.createButton({
-		bottom : 10,
-		left : 75,
+		backgroundImage: "none",
 		height : 50,
-		width : 50,
-		backgroundImage : "/graphics/buttons/btn-ok.png"
+		width : 100,
+		font:{ fontSize: 24, fontWeight: "bold"},
+		color : '#FFF',
+		title 	: "OK"
 	});
 	this.btnOk.addEventListener("singletap", function(e){
 		that.close(true);
 	});
-	this.me.add(this.btnOk);
-	
-	this.btnCancel = Ti.UI.createButton({
-		bottom : 10,
-		right : 75,
-		height : 50,
-		width : 50,
-		backgroundImage : "/graphics/buttons/btn-cancel.png"
-	});
-	this.btnCancel.addEventListener("singletap", function(e){
-		that.close(false);
-	});
-	this.me.add(this.btnCancel);
+	this.footer.add(this.btnOk);
 	
 	// functions
 	this.open = function(parent, dateValue, callback){
 		that.callback = callback;
+		
 		that.parent = parent;
 		
-		that.pickerTime.value = dateValue;
+		if(dateValue) that.pickerTime.value = dateValue;
 		
 		// show me
 		if(OS_IOS){
 			// show me
-			that.me.top = "100%";
+			that.me.opacity = 0; //hack
 			parent.add(this.me);
 					
-			that.me.animate({ top : 0, duration : 150});
+			that.me.animate({ opacity : 1, duration : 250});
 		} else {
-			that.me.top = 0;
 			parent.add(this.me);
 		}
 	};
@@ -105,12 +91,10 @@ function EditDateOnlyPopup(){
 			var value = that.pickerTime.value;
 
 			if(that.callback) that.callback(value);
-		} else {
-			if(that.callback) that.callback(null);
 		}
 		
 		if(OS_IOS){
-			that.me.animate({ top : "100%", duration : 150}, function(e){
+			that.me.animate({ opacity : 0, duration : 150}, function(e){
 				that.parent.remove(that.me);
 			});
 		} else {
@@ -118,4 +102,4 @@ function EditDateOnlyPopup(){
 		}
 	};}
 
-exports.EditDateOnlyPopup = EditDateOnlyPopup;
+exports.EditTimePopup = EditTimePopup;

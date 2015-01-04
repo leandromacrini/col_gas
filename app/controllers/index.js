@@ -12,9 +12,13 @@ var openAnimation = Ti.UI.createAnimation({
 
 function openSubView(view){
 	currentView = view.getView();
-	currentView.transform = Titanium.UI.create2DMatrix().scale(0);
-	$.container.add(currentView);
-	currentView.animate(openAnimation);
+	if(OS_IOS){
+		currentView.transform = Titanium.UI.create2DMatrix().scale(0);
+		$.container.add(currentView);
+		currentView.animate(openAnimation);
+	} else {
+		$.container.add(currentView);
+	}
 	$.homeButton.show();
 	view.open();
 }

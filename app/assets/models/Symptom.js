@@ -170,7 +170,7 @@ function readSymptomsByDate(date){
 	var result = null;
 	
 	var db = Ti.Database.open('ColicheGassoseDB');
-	var recordsRS = db.execute("SELECT * from symptoms where substr(when_date,0,8) = '" + moment(date).format("DDMMYYYY") +"'");
+	var recordsRS = db.execute("SELECT * from symptoms where when_date like'" + moment(date).format("DDMMYYYY") +"%'");
 	
 	if(recordsRS.getRowCount()>0) result = [];
 	

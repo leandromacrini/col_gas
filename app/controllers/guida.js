@@ -13,7 +13,7 @@ function openCosa(){
 	
 	$.pagesGuida.scrollToView(1);
 	$.detailImageGuida.image = "/images/baby-1.jpg";
-	$.detailTextGuida.text = "Le coliche gassose rappresentano un disturbo estremamente frequente nelle prime settimane di vita e consistono in attacchi improvvisi di irritabilità, irrequietezza o pianto che possono durare anche ore. L’esordio è, generalmente nel tardo pomeriggio o la sera e, generalmente, al termine di ogni episodio il bambino di addormenta.";
+	$.detailTextGuida.text = "Le coliche gassose rappresentano un disturbo estremamente frequente nelle prime settimane di vita e consistono in attacchi improvvisi di irritabilità, irrequietezza o pianto che possono durare anche ore. L’esordio è generalmente nel tardo pomeriggio o la sera, al termine di ogni episodio il bimbo si addormenta.";
 };
 
 function openSintomi(){

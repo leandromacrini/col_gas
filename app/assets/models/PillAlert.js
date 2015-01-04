@@ -184,7 +184,12 @@ function createRecurrentPillAlert(dose){
 				);
 				
 				// create only future reminder to avoid notification on today's past reminders 
-				if(when.isAfter(moment(), 'minute')) alert.save();
+				if(when.isBefore(moment())){
+					alert.Taken = true;
+					alert.asked = true;
+				}
+				
+				alert.save();
 				
 				//if it's the first PillAlert save the parentId for next alerts in this series
 				if( ! parentId ) parentId = alert.ID;
@@ -266,7 +271,7 @@ function readPillAlertsByDate(date){
 	var result = null;
 	
 	var db = Ti.Database.open('ColicheGassoseDB');
-	var recordsRS = db.execute("SELECT * from pill_alerts where substr(when_date,0,8) = ?", moment(date).format("DDMMYYYY"));
+	var recordsRS = db.execute("SELECT * from pill_alerts where when_date like'" + moment(date).format("DDMMYYYY") +"%'");
 	
 	if(recordsRS.getRowCount()>0) result = [];
 	
@@ -317,6 +322,38 @@ function read(id){
 	
 	return result;
 }
+
+var RemedyNames = [
+	"Terapia posizionale",
+	"Massaggio",
+	"Musica dolce",
+	"Movimento",
+	"Probiotici",
+	"Avviso personale"
+];
+var RemedyRepeats = [
+	"Nessuna Ripetizione",
+	"Per 2 settimane",
+	"Per 3 settimane",
+	"Per 4 settimane",
+	"Per 2 mesi",
+	"Per 4 mesi",
+	"Per 6 mesi",
+	"Per 12 mesi"
+];
+var RemedyWeekValues = [
+	1,
+	2,
+	3,
+	4,
+	8,
+	16,
+	24,
+	48
+];
+exports.RemedyRepeats = RemedyRepeats;
+exports.RemedyNames = RemedyNames;
+exports.RemedyWeekValues = RemedyWeekValues;
 
 exports.getRecordsDeleted = getRecordsDeleted;
 exports.getRecordsToSync = getRecordsToSync;
