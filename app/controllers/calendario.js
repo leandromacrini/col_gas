@@ -346,7 +346,8 @@ var titleUp = Titanium.UI.createAnimation({
 
 var titleDown = Titanium.UI.createAnimation({ //used only on iOS
 	duration : animationDuration / 2,
-	bottom : -50
+	bottom : -50,
+	autoreverse : OS_ANDROID ? true : false //we have 2 different animation on iOS and Android
 });
 
 var goNext = function() {
@@ -362,7 +363,7 @@ var goNext = function() {
 		b++;
 	}
 
-	//monthTitle.setTop(0);
+	monthTitle.setBottom(7);
 	monthTitle.animate(titleDown);
 	setTimeout(function() {
 		monthTitle.text = months[b] + ' ' + a;
@@ -406,6 +407,7 @@ var goPrev = function() {
 		b--;
 	}
 
+	monthTitle.setBottom(7);
 	monthTitle.animate(titleDown);
 	setTimeout(function() {
 		monthTitle.text = months[b] + ' ' + a;
@@ -467,6 +469,10 @@ Ti.App.addEventListener("vls:openAppointmentDetail", function(ea){
 
 Ti.App.addEventListener("vls:openAlertDetail", function(ea){
 	that.alertReadView.open($.calendario, ea.item);
+});
+
+Ti.App.addEventListener("vls:addAnotherReminder", function(ea){
+	that.alertView.open($.calendario);
 });
 
 this.open = function() {

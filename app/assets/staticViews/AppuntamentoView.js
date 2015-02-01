@@ -87,7 +87,7 @@ function AppuntamentoView() {
 	
 	this.contanier.add(this.lblDate);
 	
-	this.contanier.add(Ti.UI.createView({
+	var ico1 = Ti.UI.createView({
 		top: 100,
 		borderWidth: 2,
 		borderColor: '#ccc',
@@ -96,7 +96,16 @@ function AppuntamentoView() {
 		height : 30,
 		width : 30,
 		right : 25
-	}));
+	});
+	ico1.addEventListener('singletap', function(ea){
+		that.setEdited();
+		that.editDate.open(that.me, that.date, function(value){
+			that.date = value;
+			that.lblDate.text = moment(value).format("DD/MM/YYYY[ alle ore ]HH:mm");
+		});
+	});
+	
+	this.contanier.add(ico1);
 	
 	this.contanier.add(Ti.UI.createLabel({
 		top : 140,

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-    <id>it.leonarts.colichegassose</id>
+    <id>it.directsp.colichegassose</id>
     <name>Coliche Gassose</name>
     <version>1.0</version>
-    <publisher>LeonArts</publisher>
-    <url>http://www.leonarts.it</url>
+    <publisher>Direct Scientific Publishing SRL</publisher>
+    <url>http://www.directsp.com</url>
     <description>undefined</description>
-    <copyright>2014 by LeonArts</copyright>
+    <copyright>2014 by Direct Scientific Publishing SRL</copyright>
     <icon>appicon.png</icon>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
@@ -37,7 +37,7 @@
     </ios>
     <android xmlns:android="http://schemas.android.com/apk/res/android">
         <manifest>
-        	<supports-screens android:anyDensity="false"/>
+            <supports-screens android:anyDensity="false"/>
             <application android:theme="@style/Theme.NoActionBar"/>
             <!-- Need to specify at least API level 11 for Titanium SDK 3.2.x and prior -->
             <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="16"/>
@@ -51,7 +51,7 @@
         <target device="iphone">true</target>
         <target device="mobileweb">false</target>
     </deployment-targets>
-    <sdk-version>3.4.1.GA</sdk-version>
+    <sdk-version>3.5.0.GA</sdk-version>
     <plugins>
         <plugin version="1.0">ti.alloy</plugin>
     </plugins>

@@ -519,12 +519,18 @@ var _ = require("lib/underscore");
 		that.me.animate({ opacity : 0, duration : 250}, function(e){
 			that.parent.remove(that.me);
 			if(save){
-				Ti.UI.createAlertDialog({
-					buttonNames : ["Ok"],
-					message : "Tutti i rimedi sono stati creati correttamente"
-				}).show();
-				
-				Ti.App.fireEvent("vls:updateCalendarView");
+				var dialog = Ti.UI.createAlertDialog({
+					cancel: 1,
+				    buttonNames: ["Ok", "Crea ancora"],
+				    message : "Tutti i rimedi sono stati creati correttamente"
+				  });
+				  dialog.addEventListener('click', function(e){
+				    if (e.index === 1){
+				      Ti.App.fireEvent("vls:addAnotherReminder");
+				    }
+				  });
+				  dialog.show();
+				  Ti.App.fireEvent("vls:updateCalendarView");
 			}
 		});
 	};

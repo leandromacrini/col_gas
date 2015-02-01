@@ -148,11 +148,15 @@ var dialogs = require('alloy/dialogs');
 		that.lblPill.text = PillAlert.RemedyNames[pillAlert.PillID];
 		that.lblTime.text = moment(pillAlert.When, "DDMMYYYY HH:mm").format("[Alle ore ]HH:mm");
 		
-		// show me
-		that.me.opacity = 0; //hack
-		parent.add(this.me);
-				
-		that.me.animate({ opacity : 1, duration : 250});
+		if(OS_IOS){
+			// show me
+			that.me.opacity = 0; //hack
+			parent.add(this.me);
+					
+			that.me.animate({ opacity : 1, duration : 250});
+		} else {
+			parent.add(this.me);
+		}
 	};
 	
 	this.close = function(todelete){
@@ -166,9 +170,14 @@ var dialogs = require('alloy/dialogs');
 		}
 		
 		Ti.App.fireEvent("vls:showHomeButton");
-		that.me.animate({ opacity : 0, duration : 250}, function(e){
+		
+		if(OS_IOS){
+			that.me.animate({ opacity : 0, duration : 250}, function(e){
+				that.parent.remove(that.me);
+			});
+		} else {
 			that.parent.remove(that.me);
-		});
+		}
 	};
 }
 

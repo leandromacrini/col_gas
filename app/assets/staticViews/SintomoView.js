@@ -113,7 +113,7 @@ function SintomoView() {
 	
 	this.contanier.add(this.lblDate);
 	
-	this.contanier.add(Ti.UI.createView({
+	var ico1 = Ti.UI.createView({
 		top: 100,
 		borderWidth: 2,
 		borderColor: '#ccc',
@@ -122,10 +122,18 @@ function SintomoView() {
 		height : 30,
 		width : 30,
 		right : 25
-	}));
+	});
+	ico1.addEventListener('singletap', function(ea){
+		that.editDate.open(that.me, that.date, function(value){
+			that.setEdited();
+			that.date = value;
+			that.lblDate.text = moment(value).format("DD/MM/YYYY[ alle ore ]HH:mm");
+		});
+	});
+	this.contanier.add(ico1);
 	
 	this.contanier.add(Ti.UI.createLabel({
-		top : 140,
+		top : 220,
 		height : 30,
 		left : 25,
 		right : 0,
@@ -136,7 +144,7 @@ function SintomoView() {
 		text : "PIANTO"
 	}));
 	this.chkPianto = Ti.UI.createSwitch({
-		top: 140,
+		top: 220,
 		right : 25
 	});
 	this.chkPianto.addEventListener('change', function(ea){
@@ -167,7 +175,7 @@ function SintomoView() {
 	this.contanier.add(this.chkRigurgito);
 	
 	this.contanier.add(Ti.UI.createLabel({
-		top : 220,
+		top : 140,
 		height : 30,
 		left : 25,
 		right : 0,
@@ -178,7 +186,7 @@ function SintomoView() {
 		text : "AGITAZIONE"
 	}));
 	this.chkAgitazione = Ti.UI.createSwitch({
-		top: 220,
+		top: 140,
 		right : 25
 	});
 	this.chkAgitazione.addEventListener('change', function(ea){
@@ -196,7 +204,7 @@ function SintomoView() {
 		verticalAlign : Ti.UI.TEXT_VERTICAL_ALIGNMENT_BOTTOM,
 		color : "#000",
 		font:{ fontSize: 20, fontWeight: "bold"},
-		text : "DURATA"
+		text : "DURATA PIANTO"
 	}));
 	
 	this.lblDuration = Ti.UI.createLabel({
@@ -210,7 +218,7 @@ function SintomoView() {
 		textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
 		text : Symptom.SymptomDurations[this.duration],
 		left : 25,
-		right : 53
+		right : 25
 	});
 	this.lblDuration.addEventListener('singletap', function(ea){
 		that.setEdited();
@@ -218,15 +226,15 @@ function SintomoView() {
 	});
 	this.contanier.add(this.lblDuration);
 	
-	this.contanier.add(Ti.UI.createView({
-		top: 300,
+	this.lblDuration.add(Ti.UI.createView({
+		top: 0,
 		borderWidth: 2,
 		borderColor: '#ccc',
 		backgroundColor: '#ccc',
 		backgroundImage: "/images/ico-down.png",
 		height : 30,
 		width : 30,
-		right : 25
+		right : 0
 		
 	}));
 	
@@ -239,7 +247,7 @@ function SintomoView() {
 		verticalAlign : Ti.UI.TEXT_VERTICAL_ALIGNMENT_BOTTOM,
 		color : "#000",
 		font:{ fontSize: 20, fontWeight: "bold"},
-		text : "INTENSITA'"
+		text : "INTENSITA' PIANTO"
 	}));
 	
 	this.btnIntensity1 = Ti.UI.createView({
@@ -405,7 +413,7 @@ function SintomoView() {
 			this.pianto = false;
 			this.rigurgito = false;
 			this.agitazione = false;
-			this.date = moment().toDate();
+			this.date = null;
 			this.duration = 0;
 			this.setIntensity(1);
 		}
@@ -414,7 +422,7 @@ function SintomoView() {
 		this.chkPianto.value = !!this.pianto;
 		this.chkRigurgito.value = !!this.rigurgito;
 		this.chkAgitazione.value = !!this.agitazione;
-		this.lblDate.text = moment(this.date).format("DD/MM/YYYY[ alle ore ]HH:mm");
+		this.lblDate.text = this.date ? moment(this.date).format("DD/MM/YYYY[ alle ore ]HH:mm") : 'Selezionare la data';
 		this.lblDuration.text = Symptom.SymptomDurations[this.duration];
 		
 		// show me
@@ -431,6 +439,14 @@ function SintomoView() {
 	
 	this.close = function(save){
 		if(save){
+			if ( ! that.date ) {
+				Ti.UI.createAlertDialog({
+					buttonNames : ["Ok"],
+					message : "I valori inseriti non sono validi!"
+				}).show();
+				return;
+			}
+			
 			//new or detail?
 			if(that.symptom) {
 				if(that.edited){

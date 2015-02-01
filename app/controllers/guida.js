@@ -2,7 +2,7 @@ function back(){
 	$.pagesGuida.scrollToView(0);
 	$.backIconGuida.visible = false;
 	$.subIconGuida.visible = true;
-	$.subTitleGuida.text = "Rimedi";
+	$.subTitleGuida.text = "Guida";
 	setTimeout(function(){ $.detailGuida.scrollTo(0,0); }, 200);
 };
 

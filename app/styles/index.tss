@@ -1,6 +1,7 @@
 "#index": {
 	backgroundColor:"#fff",
-	exitOnClose : "true"
+	exitOnClose : "true",
+	orientationModes: [Ti.UI.PORTRAIT]
 }
 	"#container": {
 		top: 60,
