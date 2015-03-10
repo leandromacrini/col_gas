@@ -13,6 +13,13 @@
 		bottom: 5,
 		backgroundImage: "/images/icon-home.png"
 	},
+	"#helpButton": {
+		width : 20,
+		height: 20,
+		right: 5,
+		bottom: 5,
+		backgroundImage: "/images/icon-guida.png"
+	},
 	
 	".logo": {
 		backgroundImage : "/images/logo.png",
@@ -133,5 +140,5 @@
 },
 ".textLogo": {
 	top: 10,
-	width: "100%"
+	width: "80%"
 }

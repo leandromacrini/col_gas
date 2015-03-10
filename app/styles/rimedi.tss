@@ -7,6 +7,17 @@
 		"#subIconRimedi":{
 			backgroundImage : "/images/icon-rimedi.png"
 		},
+	".titleItem":{
+		color : "#E46A74",
+		backgroundColor : "#ccc",
+		height : 20,
+		font:{ fontSize: 18, fontWeight: "bold"}
+	}
+	".listItemMain":{
+		color : "#E46A74",
+		backgroundColor : "#ededed",
+		font:{ fontSize: 26, fontWeight: "bold"}
+	}
 	".listItem":{
 		color : "#E46A74",
 		font:{ fontSize: 26, fontWeight: "bold"}

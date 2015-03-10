@@ -28,7 +28,7 @@ function Symptom(pianto, rigurgito, agitazione, intensity, when, duration, id, t
 	this.Agitazione = agitazione || 0;
 	this.Intensity = intensity || 0;
 	this.Duration = duration || 0;
-	this.When = when ? moment(when).format("DDMMYYYY HH:mm") : null;
+	this.When = when ? moment(when).toJSON() : null;
 }
 
 /**
@@ -53,8 +53,8 @@ Symptom.prototype.save = function save(alreadySynced){
 };
 
 var SymptomDurations = [
+	'Nessuna',
 	'5 secondi',
-	'10 secondi',
 	'15 secondi',
 	'30 secondi',
 	'1 minuto',
@@ -118,7 +118,7 @@ function getRecordsToSync(){
 			recordsRS.fieldByName('rigurgito'),
 			recordsRS.fieldByName('agitazione'),
 			recordsRS.fieldByName('intensity'),
-			moment(recordsRS.fieldByName('when_date'),"DDMMYYYY HH:mm").toDate(),
+			moment(recordsRS.fieldByName('when_date')).toDate(),
 			recordsRS.fieldByName('duration'),
 			recordsRS.fieldByName('id'),
 			recordsRS.fieldByName('to_sync')
@@ -149,7 +149,7 @@ function read(id){
 			recordsRS.fieldByName('rigurgito'),
 			recordsRS.fieldByName('agitazione'),
 			recordsRS.fieldByName('intensity'),
-			moment(recordsRS.fieldByName('when_date'),"DDMMYYYY HH:mm").toDate(),
+			moment(recordsRS.fieldByName('when_date')).toDate(),
 			recordsRS.fieldByName('duration'),
 			recordsRS.fieldByName('id'),
 			recordsRS.fieldByName('to_sync')
@@ -170,7 +170,7 @@ function readSymptomsByDate(date){
 	var result = null;
 	
 	var db = Ti.Database.open('ColicheGassoseDB');
-	var recordsRS = db.execute("SELECT * from symptoms where when_date like'" + moment(date).format("DDMMYYYY") +"%'");
+	var recordsRS = db.execute("SELECT * from symptoms where when_date like'" + moment(date).format("YYYY-MM-DD") +"%'");
 	
 	if(recordsRS.getRowCount()>0) result = [];
 	
@@ -180,7 +180,7 @@ function readSymptomsByDate(date){
 			recordsRS.fieldByName('rigurgito'),
 			recordsRS.fieldByName('agitazione'),
 			recordsRS.fieldByName('intensity'),
-			moment(recordsRS.fieldByName('when_date'),"DDMMYYYY HH:mm").toDate(),
+			moment(recordsRS.fieldByName('when_date')).toDate(),
 			recordsRS.fieldByName('duration'),
 			recordsRS.fieldByName('id'),
 			recordsRS.fieldByName('to_sync')

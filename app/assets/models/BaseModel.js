@@ -87,7 +87,6 @@ function resetSyncing(){
 	var db = Ti.Database.open('ColicheGassoseDB');
 	db.execute('BEGIN');
 	db.execute("UPDATE appointments set to_sync=1 WHERE to_sync=2");
-	db.execute("UPDATE pills set to_sync=1 WHERE to_sync=2");
 	db.execute("UPDATE pill_alerts set to_sync=1 WHERE to_sync=2");
 	db.execute("UPDATE symptoms set to_sync=1 WHERE to_sync=2");
 	db.execute("UPDATE userdata set to_sync=1 WHERE to_sync=2");

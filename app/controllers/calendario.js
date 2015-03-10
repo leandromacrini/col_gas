@@ -261,15 +261,13 @@ var calView = function(a, b, c) {
 		Ti.API.info('Container clicked: ' + JSON.stringify(e.source));
 		switch (e.source.current) {
 			case "yes":
-				if(e.source.alerts || e.source.symptoms || e.source.appointments){
-					//open popup
-					that.dayListView.open($.calendario, {
-						alerts : e.source.alerts,
-						symptoms : e.source.symptoms,
-						appointments : e.source.appointments,
-						date : e.source.date
-					});
-				}
+				//open popup
+				that.dayListView.open($.calendario, {
+					alerts : e.source.alerts,
+					symptoms : e.source.symptoms,
+					appointments : e.source.appointments,
+					date : e.source.date
+				});
 				break;
 			case "prev":
 				goPrev();

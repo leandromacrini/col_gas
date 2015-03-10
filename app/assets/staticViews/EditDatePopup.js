@@ -77,16 +77,32 @@ function EditDatePopup(){
 	this.me.add(this.footer);
 	
 	this.btnOk = Ti.UI.createButton({
+		backgroundImage: "none",
 		height : 50,
 		width : 100,
 		font:{ fontSize: 24, fontWeight: "bold"},
 		color : '#FFF',
-		title : "OK"
+		center: {x : "25%", y: "50%"},
+		title 	: "OK"
 	});
 	this.btnOk.addEventListener("singletap", function(e){
 		that.close(true);
 	});
 	this.footer.add(this.btnOk);
+	
+	this.btnClose = Ti.UI.createButton({
+		backgroundImage: "none",
+		height : 50,
+		width : 150,
+		font:{ fontSize: 24, fontWeight: "bold"},
+		color : '#FFF',
+		center: {x : "75%", y: "50%"},
+		title 	: "ANNULLA"
+	});
+	this.btnClose.addEventListener("singletap", function(e){
+		that.close(false);
+	});
+	this.footer.add(this.btnClose);
 	
 	// functions
 	this.open = function(parent, dateValue, callback){

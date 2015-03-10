@@ -13,7 +13,6 @@ function DayListView() {
 	var that = this;
 	
 	var Appointment = require('/models/Appointment');
-	var Pill = require('/models/Pill');
 	var PillAlert  = require('/models/PillAlert'); 
 	var Symptom = require('/models/Symptom');
 	var UserData = require('/models/UserData');
@@ -159,19 +158,20 @@ function DayListView() {
 		var data = [];
 		
 		for(var i=0; items.alerts && i<items.alerts.length;i++){
-			//var pill = Pill.read(items.alerts[i].PillID);
 			data.push(createRow(
 				PillAlert.RemedyNames[items.alerts[i].PillID],
-				"Rimedio per le " + moment(items.alerts[i].When,"DDMMYYYY HH:mm").format("HH:mm"),
+				"Rimedio per le " + moment(items.alerts[i].When).format("HH:mm"),
 				items.alerts[i],
 				"alert")
 			);
 		}
 		
 		for(var i=0; items.symptoms && i<items.symptoms.length;i++){
+			var intensity = items.symptoms[i].Intensity > 0 ? Symptom.SymptomIntensity[items.symptoms[i].Intensity-1] : "Generico";
+			
 			data.push(createRow(
 				"Episodio",
-				Symptom.SymptomIntensity[items.symptoms[i].Intensity-1] + " alle " + moment(items.symptoms[i].When,"DDMMYYYY HH:mm").format("HH:mm"),
+				intensity + " alle " + moment(items.symptoms[i].When).format("HH:mm"),
 				items.symptoms[i],
 				"symptom")
 			);
@@ -181,7 +181,7 @@ function DayListView() {
 			var userData = UserData.load();
 			data.push(createRow(
 				"Vista medica",
-				"Appuntamento ore " + moment(items.appointments[i].When,"DDMMYYYY HH:mm").format("HH:mm"),
+				"Appuntamento ore " + moment(items.appointments[i].When).format("HH:mm"),
 				items.appointments[i],
 				"appointment")
 			);

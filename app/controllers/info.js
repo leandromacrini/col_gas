@@ -1,3 +1,5 @@
+var terms = require("/legals/terms").terms;
+
 function linkDsp(){
 	Ti.Platform.openURL("http://www.directsp.com");
 }
@@ -13,3 +15,26 @@ function linkTf(){
 this.open = function() {
 	$.info.opacity = 1;
 };
+
+for(var i = 0; i < terms.length; i++){
+	switch(terms[i].type){
+		case "title":
+			$.scroll.add(Ti.UI.createLabel({
+				text: terms[i].text,
+				textAlign : 'center',
+				font:{ fontSize: 16, fontWeight: "bold"},
+				color : '#000',
+				bottom: 5
+			}));
+			break;
+		case "content":
+			$.scroll.add(Ti.UI.createLabel({
+				text: terms[i].text,
+				textAlign : 'center',
+				font:{ fontSize: 12, fontWeight: "normal"},
+				color : '#000',
+				bottom: 10
+			}));
+			break;
+	}
+}

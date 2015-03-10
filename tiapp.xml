@@ -43,7 +43,9 @@
             <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="16"/>
         </manifest>
     </android>
-    <modules/>
+    <modules>
+        <module platform="android">com.activate.gcm</module>
+    </modules>
     <deployment-targets>
         <target device="android">true</target>
         <target device="blackberry">false</target>

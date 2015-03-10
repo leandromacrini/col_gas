@@ -3,6 +3,7 @@
 		<View class="header">
 			<View class="home" id="homeButton" onClick="closeSubView"></View>
 			<View class="logo"></View>
+			<View id="helpButton" onClick="showHelpView"></View>
 		</View>
 		<View id="container">
 			<View id="btnCalendario" onClick="openCalendario" class="homeButton">

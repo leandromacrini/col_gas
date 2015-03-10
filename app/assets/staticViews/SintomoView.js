@@ -92,7 +92,7 @@ function SintomoView() {
 	}));
 	
 	this.lblDate = Ti.UI.createLabel({
-		top: 100,
+		top: 90,
 		borderWidth: 2,
 		borderColor: '#ccc',
 		backgroundColor: '#FFF',
@@ -114,7 +114,7 @@ function SintomoView() {
 	this.contanier.add(this.lblDate);
 	
 	var ico1 = Ti.UI.createView({
-		top: 100,
+		top: 90,
 		borderWidth: 2,
 		borderColor: '#ccc',
 		backgroundColor: '#ccc',
@@ -133,7 +133,7 @@ function SintomoView() {
 	this.contanier.add(ico1);
 	
 	this.contanier.add(Ti.UI.createLabel({
-		top : 220,
+		top : 130,
 		height : 30,
 		left : 25,
 		right : 0,
@@ -144,7 +144,7 @@ function SintomoView() {
 		text : "PIANTO"
 	}));
 	this.chkPianto = Ti.UI.createSwitch({
-		top: 220,
+		top: 130,
 		right : 25
 	});
 	this.chkPianto.addEventListener('change', function(ea){
@@ -154,49 +154,7 @@ function SintomoView() {
 	this.contanier.add(this.chkPianto);
 	
 	this.contanier.add(Ti.UI.createLabel({
-		top : 180,
-		height : 30,
-		left : 25,
-		right : 0,
-		textAlign : Ti.UI.TEXT_ALIGNMENT_LEFT,
-		verticalAlign : Ti.UI.TEXT_VERTICAL_ALIGNMENT_BOTTOM,
-		color : "#000",
-		font:{ fontSize: 20, fontWeight: "bold"},
-		text : "RIGURGITO"
-	}));
-	this.chkRigurgito = Ti.UI.createSwitch({
-		top: 180,
-		right : 25
-	});
-	this.chkRigurgito.addEventListener('change', function(ea){
-		that.setEdited();
-		that.rigurgito = ea.value;
-	});
-	this.contanier.add(this.chkRigurgito);
-	
-	this.contanier.add(Ti.UI.createLabel({
-		top : 140,
-		height : 30,
-		left : 25,
-		right : 0,
-		textAlign : Ti.UI.TEXT_ALIGNMENT_LEFT,
-		verticalAlign : Ti.UI.TEXT_VERTICAL_ALIGNMENT_BOTTOM,
-		color : "#000",
-		font:{ fontSize: 20, fontWeight: "bold"},
-		text : "AGITAZIONE"
-	}));
-	this.chkAgitazione = Ti.UI.createSwitch({
-		top: 140,
-		right : 25
-	});
-	this.chkAgitazione.addEventListener('change', function(ea){
-		that.setEdited();
-		that.agitazione = ea.value;
-	});
-	this.contanier.add(this.chkAgitazione);
-	
-	this.contanier.add(Ti.UI.createLabel({
-		top : 260,
+		top : 170,
 		height : 30,
 		left : 25,
 		right : 0,
@@ -208,7 +166,7 @@ function SintomoView() {
 	}));
 	
 	this.lblDuration = Ti.UI.createLabel({
-		top: 300,
+		top: 200,
 		borderWidth: 2,
 		borderColor: '#ccc',
 		backgroundColor: '#FFF',
@@ -239,7 +197,49 @@ function SintomoView() {
 	}));
 	
 	this.contanier.add(Ti.UI.createLabel({
-		top : 350,
+		top : 320,
+		height : 30,
+		left : 25,
+		right : 0,
+		textAlign : Ti.UI.TEXT_ALIGNMENT_LEFT,
+		verticalAlign : Ti.UI.TEXT_VERTICAL_ALIGNMENT_BOTTOM,
+		color : "#000",
+		font:{ fontSize: 20, fontWeight: "bold"},
+		text : "RIGURGITO"
+	}));
+	this.chkRigurgito = Ti.UI.createSwitch({
+		top: 320,
+		right : 25
+	});
+	this.chkRigurgito.addEventListener('change', function(ea){
+		that.setEdited();
+		that.rigurgito = ea.value;
+	});
+	this.contanier.add(this.chkRigurgito);
+	
+	this.contanier.add(Ti.UI.createLabel({
+		top : 360,
+		height : 30,
+		left : 25,
+		right : 0,
+		textAlign : Ti.UI.TEXT_ALIGNMENT_LEFT,
+		verticalAlign : Ti.UI.TEXT_VERTICAL_ALIGNMENT_BOTTOM,
+		color : "#000",
+		font:{ fontSize: 20, fontWeight: "bold"},
+		text : "AGITAZIONE"
+	}));
+	this.chkAgitazione = Ti.UI.createSwitch({
+		top: 360,
+		right : 25
+	});
+	this.chkAgitazione.addEventListener('change', function(ea){
+		that.setEdited();
+		that.agitazione = ea.value;
+	});
+	this.contanier.add(this.chkAgitazione);
+	
+	this.contanier.add(Ti.UI.createLabel({
+		top : 250,
 		height : 30,
 		left : 25,
 		right : 0,
@@ -251,7 +251,7 @@ function SintomoView() {
 	}));
 	
 	this.btnIntensity1 = Ti.UI.createView({
-		top: 380,
+		top: 280,
 		backgroundImage: "/images/ico-intensity.png",
 		height : 40,
 		width : 40,
@@ -263,7 +263,7 @@ function SintomoView() {
 	});
 	
 	this.btnIntensity2 = Ti.UI.createView({
-		top: 380,
+		top: 280,
 		backgroundImage: "/images/ico-intensity.png",
 		height : 40,
 		width : 40,
@@ -275,7 +275,7 @@ function SintomoView() {
 	});
 	
 	this.btnIntensity3 = Ti.UI.createView({
-		top: 380,
+		top: 280,
 		backgroundImage: "/images/ico-intensity.png",
 		height : 40,
 		width : 40,
@@ -287,7 +287,7 @@ function SintomoView() {
 	});
 	
 	this.btnIntensity4 = Ti.UI.createView({
-		top: 380,
+		top: 280,
 		backgroundImage: "/images/ico-intensity.png",
 		height : 40,
 		width : 40,
@@ -299,7 +299,7 @@ function SintomoView() {
 	});
 	
 	this.btnIntensity5 = Ti.UI.createView({
-		top: 380,
+		top: 280,
 		backgroundImage: "/images/ico-intensity.png",
 		height : 40,
 		width : 40,
@@ -393,7 +393,7 @@ function SintomoView() {
 			this.pianto = symptom.Pianto;
 			this.rigurgito = symptom.Rigurgito;
 			this.agitazione = symptom.Agitazione;
-			this.date = moment(symptom.When, "DDMMYYYY HH:mm").toDate(),
+			this.date = moment(symptom.When).toDate(),
 			this.duration = symptom.Duration;
 			this.setIntensity(symptom.Intensity);
 		} else {
@@ -415,7 +415,7 @@ function SintomoView() {
 			this.agitazione = false;
 			this.date = null;
 			this.duration = 0;
-			this.setIntensity(1);
+			this.setIntensity(0);
 		}
 		
 		//uodate values
@@ -454,7 +454,7 @@ function SintomoView() {
 					this.symptom.Pianto = this.pianto;
 					this.symptom.Rigurgito = this.rigurgito;
 					this.symptom.Agitazione = this.agitazione;
-					this.symptom.When =  moment(this.date).format("DDMMYYYY HH:mm");
+					this.symptom.When =  moment(this.date).toJSON();
 					this.symptom.Duration = this.duration;
 					this.symptom.Intensity = this.intensity;
 					Ti.API.info('Save symptom: ' + JSON.stringify(this.symptom));

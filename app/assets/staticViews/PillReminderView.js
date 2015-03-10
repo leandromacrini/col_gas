@@ -104,8 +104,34 @@ var _ = require("lib/underscore");
 		height : 30,
 		width : 30
 	}));
-	
 	this.scroll.add(this.lblPill);
+	
+	this.scroll.add(Ti.UI.createLabel({
+		top : 10,
+		bottom : 5,
+		height : 30,
+		left : 25,
+		right : 0,
+		textAlign : Ti.UI.TEXT_ALIGNMENT_LEFT,
+		verticalAlign : Ti.UI.TEXT_VERTICAL_ALIGNMENT_BOTTOM,
+		color : "#000",
+		font : { fontSize: 20, fontWeight: "bold"},
+		text : "DETTAGLI RIMEDIO"
+	}));
+	
+	this.txbInfo = Ti.UI.createTextArea({
+		borderWidth: 2,
+		borderColor: '#ccc',
+		backgroundColor: '#fff',
+		color: '#777',
+		textAlign : Ti.UI.TEXT_ALIGNMENT_LEFT,
+		font:{ fontSize: 18, fontWeight: "bold"},
+		height : 80,
+		left : 25,
+		right : 25,
+		maxLength : 60
+	});
+	this.scroll.add(this.txbInfo);
 	
 	this.scroll.add(Ti.UI.createLabel({
 		top : 10,
@@ -118,7 +144,6 @@ var _ = require("lib/underscore");
 		font : { fontSize: 20, fontWeight: "bold"},
 		text : "GIORNI"
 	}));
-	
 	this.chkContainer = Ti.UI.createView({
 		width : '257dp',
 		height : '50dp',
@@ -501,6 +526,7 @@ var _ = require("lib/underscore");
 			// generate PillAlerts
 			var result = PillAlert.createRecurrentPillAlert({
 				PillId : that.rimedio,
+				Info : that.txbInfo.value,
 				Days : that.getSelectedDays(),
 				Cycle : PillAlert.RemedyWeekValues[that.ripetizione],
 				Hours : that.getSelectedHours()

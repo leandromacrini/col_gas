@@ -92,6 +92,32 @@ var dialogs = require('alloy/dialogs');
 	});
 	
 	this.scroll.add(this.lblTime);
+	
+	this.scroll.add(Ti.UI.createLabel({
+		top : 10,
+		bottom : 5,
+		height : 30,
+		left : 25,
+		right : 0,
+		textAlign : Ti.UI.TEXT_ALIGNMENT_LEFT,
+		verticalAlign : Ti.UI.TEXT_VERTICAL_ALIGNMENT_BOTTOM,
+		color : "#000",
+		font : { fontSize: 20, fontWeight: "bold"},
+		text : "INFORMAZIONI"
+	}));
+	
+	this.lblInfo = Ti.UI.createLabel({
+		borderWidth: 2,
+		borderColor: '#ccc',
+		backgroundColor: '#fff',
+		color: '#777',
+		textAlign : Ti.UI.TEXT_ALIGNMENT_CENTER,
+		font:{ fontSize: 18, fontWeight: "bold"},
+		height : 80,
+		left : 25,
+		right : 25
+	});
+	this.scroll.add(this.lblInfo);
 
 	//footer
 	this.footer = Ti.UI.createView({
@@ -146,7 +172,8 @@ var dialogs = require('alloy/dialogs');
 		Ti.App.fireEvent("vls:hideHomeButton");
 		
 		that.lblPill.text = PillAlert.RemedyNames[pillAlert.PillID];
-		that.lblTime.text = moment(pillAlert.When, "DDMMYYYY HH:mm").format("[Alle ore ]HH:mm");
+		that.lblTime.text = moment(pillAlert.When).format("[Alle ore ]HH:mm");
+		that.lblInfo.text = pillAlert.Info;
 		
 		if(OS_IOS){
 			// show me

@@ -3,12 +3,20 @@ var info = Alloy.createController("info");
 var rimedi = Alloy.createController("rimedi");
 var calendario = Alloy.createController("calendario");
 
+var AgreementView = require("/staticViews/AgreementView").AgreementView;
+var HelpView = require("/staticViews/HelpView").HelpView;
+
 var currentView;
+var helpView = new HelpView();
 
 var openAnimation = Ti.UI.createAnimation({
     transform : Ti.UI.create2DMatrix().scale(1),
     duration : 250,
 });
+
+function showHelpView(){
+	helpView.open($.index);
+};
 
 function openSubView(view){
 	currentView = view.getView();
@@ -51,15 +59,13 @@ function openInfo(ea){
 
 $.index.addEventListener('open', function (ea) {
 	var firstStart = Ti.App.Properties.getBool("first_app_start", true);
-	if (firstStart) {
+	if (firstStart || true) { //TODO
 		// Disclaymer
-		Ti.UI.createAlertDialog({
-			buttonNames : ["Ok"],
-			message : "Informativa sulla privacy\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-		}).show();
-
+		var dialog = new AgreementView();
 		
-		Ti.App.Properties.setBool("first_app_start", false);
+		dialog.open($.index);
+	} else {
+		Alloy.Controllers.PushNotificationController.registerForPushNotification();
 	}
 });
 

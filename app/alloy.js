@@ -8,7 +8,6 @@
 // accessible globally by attaching them to the `Alloy.Globals`
 // object. For example:
 //
-// Alloy.Globals.someGlobalFunction = function(){};
 
 Alloy.Globals.blinkButton = function(ea){
 	ea.source.opacity = 0;
@@ -25,9 +24,18 @@ moment.lang('it');
 require("/models/BaseModel").init();
 	
 require("/models/UserData").init();
-require("/models/Pill").init();
 require("/models/PillAlert").init();
 require("/models/Appointment").init();
 require("/models/Symptom").init();
+
+//create "Singleton" managers
+Alloy.Controllers = {};
+
+Alloy.Controllers.LogController = require('/businessControllers/LogController');
+Alloy.Controllers.AsyncConnectionController = require('/businessControllers/AsyncConnectionController');
+Alloy.Controllers.PushNotificationController = require('/businessControllers/PushNotificationController');
+
+Alloy.Controllers.LogController.activate(false);
+Alloy.Controllers.AsyncConnectionController.activate(false);
 
 Ti.UI.iPhone.appBadge = 0;

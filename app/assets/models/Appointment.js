@@ -22,7 +22,7 @@ function Appointment(info, when, id, toSync){
 	_.extend(this, new BaseModel("appointments", id, toSync));
 	
 	this.Info = info || "";
-	this.When = when ? moment(when).format("DDMMYYYY HH:mm") : null;
+	this.When = when ? moment(when).toJSON() : null;
 }
 
 /**
@@ -88,7 +88,7 @@ function getRecordsToSync(){
 	while (recordsRS.isValidRow()) {
 		result.push(new Appointment(
 			recordsRS.fieldByName('info'),
-			moment(recordsRS.fieldByName('when_date'),"DDMMYYYY HH:mm").toDate(),
+			moment(recordsRS.fieldByName('when_date')).toDate(),
 			recordsRS.fieldByName('id'),
 			recordsRS.fieldByName('to_sync')
 		));
@@ -115,7 +115,7 @@ function read(id){
 	if(recordsRS.getRowCount()>0 && recordsRS.isValidRow()){
 		result = new Appointment(
 			recordsRS.fieldByName('info'),
-			moment(recordsRS.fieldByName('when_date'),"DDMMYYYY HH:mm").toDate(),
+			moment(recordsRS.fieldByName('when_date')).toDate(),
 			recordsRS.fieldByName('id'),
 			recordsRS.fieldByName('to_sync')
 		);		
@@ -135,14 +135,14 @@ function readAppointmentByDate(date){
 	var result = null;
 	
 	var db = Ti.Database.open('ColicheGassoseDB');
-	var recordsRS = db.execute("SELECT * from appointments where when_date like'" + moment(date).format("DDMMYYYY") +"%'");
+	var recordsRS = db.execute("SELECT * from appointments where when_date like'" + moment(date).format("YYYY-MM-DD") +"%'");
 	
 	if(recordsRS.getRowCount()>0) result = [];
 	
 	while (recordsRS.isValidRow()) {
 		result.push(new Appointment(
 			recordsRS.fieldByName('info'),
-			moment(recordsRS.fieldByName('when_date'),"DDMMYYYY HH:mm").toDate(),
+			moment(recordsRS.fieldByName('when_date')).toDate(),
 			recordsRS.fieldByName('id'),
 			recordsRS.fieldByName('to_sync')
 		));

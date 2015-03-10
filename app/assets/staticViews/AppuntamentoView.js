@@ -205,7 +205,7 @@ function AppuntamentoView() {
 			this.appointment = Appointment.read(appointment.ID);
 			
 			this.note = appointment.Info;
-			this.date = moment(appointment.When, "DDMMYYYY HH:mm").toDate();
+			this.date = moment(appointment.When).toDate();
 		} else {
 			Ti.API.info('Open new appointment');
 			
@@ -241,7 +241,7 @@ function AppuntamentoView() {
 			if(this.appointment) {
 				if(this.edited){
 					//save detail
-					this.appointment.When = moment(this.date).format("DDMMYYYY HH:mm");
+					this.appointment.When = moment(this.date).toJSON();
 					this.appointment.Info = this.txfNote.value;
 					Ti.API.info('Save appointment: ' + JSON.stringify(this.appointment));
 					this.appointment.save();

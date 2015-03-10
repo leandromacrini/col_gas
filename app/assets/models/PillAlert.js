@@ -17,16 +17,18 @@ var BaseModel = require('/models/BaseModel').BaseModel;
  * @param {Date} when
  * @param {Number} parentId
  * @param {Boolean} taken
- * @param {Boolean} toSync
+ * @param {Boolean} asked
+ * @param {String} info
  */
-function PillAlert(pillId, when, parentId, taken, asked, id, toSync){
+function PillAlert(pillId, when, parentId, taken, asked, info, id, toSync){
 	_.extend(this, new BaseModel("pill_alerts", id, toSync));
 	
 	this.PillID = pillId || 0;
-	this.When = when ? moment(when).format("DDMMYYYY HH:mm") : null;
+	this.When = when ? moment(when).toJSON() : null;
 	this.ParentID = parentId || null;
 	this.Taken = _.isUndefined(taken)? null : taken;
-	this.Asked = asked || false;
+	this.Asked = _.isUndefined(asked)? null : taken;
+	this.Info = info || "";
 }
 
 /**
@@ -64,12 +66,12 @@ PillAlert.prototype.save = function save(alreadySynced){
 	
 	//create or update
 	if( ! this.ID ) {
-		db.execute('INSERT INTO pill_alerts (pill_id,when_date,parent_id,taken,to_sync, asked) VALUES (?,?,?,?,?,?)',
-			this.PillID, this.When, this.ParentID, this.Taken, this.ToSync, this.Asked);
+		db.execute('INSERT INTO pill_alerts (pill_id,when_date,parent_id,taken,to_sync, asked, info) VALUES (?,?,?,?,?,?,?)',
+			this.PillID, this.When, this.ParentID, this.Taken, this.ToSync, this.Asked, this.Info);
 		this.ID = db.getLastInsertRowId( );
 	} else {
-		db.execute('UPDATE pill_alerts SET pill_id=?,when_date=?,parent_id=?,taken=?,to_sync=?, asked=? WHERE id=?',
-			this.PillID, this.When, this.ParentID, this.Taken, this.ToSync, this.Asked, this.ID);
+		db.execute('UPDATE pill_alerts SET pill_id=?,when_date=?,parent_id=?,taken=?,to_sync=?, asked=?, info =? WHERE id=?',
+			this.PillID, this.When, this.ParentID, this.Taken, this.ToSync, this.Asked, this.Info, this.ID);
 	}
 	
 	db.close();
@@ -84,6 +86,7 @@ function init(){
 	db.execute('CREATE TABLE IF NOT EXISTS pill_alerts(id INTEGER PRIMARY KEY AUTOINCREMENT, pill_id INTEGER, when_date TEXT, parent_id INTEGER, taken INTEGER, to_sync INTEGER);');
 	
 	try{
+		db.execute('ALTER TABLE pill_alerts ADD COLUMN info TEXT');
 		db.execute('ALTER TABLE pill_alerts ADD COLUMN asked INTEGER');
 	} catch (ex){
 		//do nothing
@@ -128,10 +131,11 @@ function getRecordsToSync(){
 	while (recordsRS.isValidRow()) {
 		result.push(new PillAlert(
 			recordsRS.fieldByName('pill_id'),
-			moment(recordsRS.fieldByName('when_date'),"DDMMYYYY HH:mm").toDate(),
+			moment(recordsRS.fieldByName('when_date')).toDate(),
 			recordsRS.fieldByName('parent_id'),
 			recordsRS.fieldByName('taken'),
 			recordsRS.fieldByName('asked'),
+			recordsRS.fieldByName('info'),
 			recordsRS.fieldByName('id'),
 			recordsRS.fieldByName('to_sync')
 		));
@@ -151,9 +155,10 @@ function getRecordsToSync(){
  */
 function createRecurrentPillAlert(dose){
 	// dose.PillId;
+	// dose.Info;
 	// dose.Days  = [0,1,2,3,4,5,6]; // 0 = Monday
 	// dose.Cycle = 1->48; // in weeks
-	// dose.Hours = [datetime, datetime];
+	// dose.Hours = [datetime];
 	
 	var days = dose.Cycle * 7;
 	
@@ -189,6 +194,8 @@ function createRecurrentPillAlert(dose){
 					alert.asked = true;
 				}
 				
+				alert.Info = dose.Info;
+				
 				alert.save();
 				
 				//if it's the first PillAlert save the parentId for next alerts in this series
@@ -216,10 +223,11 @@ function readPillAlertsByParentID(parentID){
 	while (recordsRS.isValidRow()) {
 		result.push(new PillAlert(
 			recordsRS.fieldByName('pill_id'),
-			moment(recordsRS.fieldByName('when_date'),"DDMMYYYY HH:mm").toDate(),
+			moment(recordsRS.fieldByName('when_date')).toDate(),
 			recordsRS.fieldByName('parent_id'),
 			recordsRS.fieldByName('taken'),
 			recordsRS.fieldByName('asked'),
+			recordsRS.fieldByName('info'),
 			recordsRS.fieldByName('id'),
 			recordsRS.fieldByName('to_sync')
 		));
@@ -247,10 +255,11 @@ function readPillAlertsByPillID(pillID){
 	while (recordsRS.isValidRow()) {
 		result.push(new PillAlert(
 			recordsRS.fieldByName('pill_id'),
-			moment(recordsRS.fieldByName('when_date'),"DDMMYYYY HH:mm").toDate(),
+			moment(recordsRS.fieldByName('when_date')).toDate(),
 			recordsRS.fieldByName('parent_id'),
 			recordsRS.fieldByName('taken'),
 			recordsRS.fieldByName('asked'),
+			recordsRS.fieldByName('info'),
 			recordsRS.fieldByName('id'),
 			recordsRS.fieldByName('to_sync')
 		));
@@ -271,17 +280,18 @@ function readPillAlertsByDate(date){
 	var result = null;
 	
 	var db = Ti.Database.open('ColicheGassoseDB');
-	var recordsRS = db.execute("SELECT * from pill_alerts where when_date like'" + moment(date).format("DDMMYYYY") +"%'");
+	var recordsRS = db.execute("SELECT * from pill_alerts where when_date like'" + moment(date).format("YYYY-MM-DD") +"%'");
 	
 	if(recordsRS.getRowCount()>0) result = [];
 	
 	while (recordsRS.isValidRow()) {
 		result.push(new PillAlert(
 			recordsRS.fieldByName('pill_id'),
-			moment(recordsRS.fieldByName('when_date'),"DDMMYYYY HH:mm").toDate(),
+			moment(recordsRS.fieldByName('when_date')).toDate(),
 			recordsRS.fieldByName('parent_id'),
 			recordsRS.fieldByName('taken'),
 			recordsRS.fieldByName('asked'),
+			recordsRS.fieldByName('info'),
 			recordsRS.fieldByName('id'),
 			recordsRS.fieldByName('to_sync')
 		));
@@ -308,10 +318,11 @@ function read(id){
 	if(recordsRS.getRowCount()>0 && recordsRS.isValidRow()){
 		result = new PillAlert(
 			recordsRS.fieldByName('pill_id'),
-			moment(recordsRS.fieldByName('when_date'),"DDMMYYYY HH:mm").toDate(),
+			moment(recordsRS.fieldByName('when_date')).toDate(),
 			recordsRS.fieldByName('parent_id'),
 			recordsRS.fieldByName('taken'),
 			recordsRS.fieldByName('asked'),
+			recordsRS.fieldByName('info'),
 			recordsRS.fieldByName('id'),
 			recordsRS.fieldByName('to_sync')
 		);		
@@ -329,7 +340,7 @@ var RemedyNames = [
 	"Musica dolce",
 	"Movimento",
 	"Probiotici",
-	"Avviso personale"
+	"Altro rimedio"
 ];
 var RemedyRepeats = [
 	"Nessuna Ripetizione",
