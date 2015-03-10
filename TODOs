@@ -1,0 +1,14 @@
++ Nella pagina sintomo togliamo i valori di default in "durata pianto" e "intensità pianto"
+FATTO
+
++ Sopra al box sostituire "informazioni" con "dettagli rimedio"
+FATTO
+
++ Nel footer dell'orario del rimedio prevediamo oltre all'ok anche un annulla
+FATTO
+
++ quando si elimina una registrazione di rimedio o sintomo nella pagina di riassunto cliccando su un giorno ci elimina tutte le registrazioni di quel giorno
+NON RIPRODUCIBILE
+
++ Nella pagina informativa dei rimedi riorganizzare il menù con "cosa fare" "cosa non fare"
+ FATTO
