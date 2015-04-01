@@ -33,7 +33,9 @@ var agreement = require("/legals/agreement").agreement;
 						textAlign : 'center',
 						font:{ fontSize: 16, fontWeight: "bold"},
 						color : '#000',
-						bottom: 5
+						bottom: 5,
+						left : 5,
+						right : 5
 					}));
 				break;
 			case "content":
@@ -42,7 +44,9 @@ var agreement = require("/legals/agreement").agreement;
 						textAlign : 'center',
 						font:{ fontSize: 12, fontWeight: "normal"},
 						color : '#000',
-						bottom: 10
+						bottom: 10,
+						left : 5,
+						right : 5
 					}));
 				break;
 		}

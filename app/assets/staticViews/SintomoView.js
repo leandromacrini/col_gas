@@ -197,25 +197,16 @@ function SintomoView() {
 	}));
 	
 	this.contanier.add(Ti.UI.createLabel({
-		top : 320,
-		height : 30,
+		top : 330,
+		color : "#E46A74",
+		backgroundColor : "#eee",
+		height : 20,
+		font:{ fontSize: 18, fontWeight: "bold"},
+		text : "Altri sintomi",
 		left : 25,
-		right : 0,
-		textAlign : Ti.UI.TEXT_ALIGNMENT_LEFT,
-		verticalAlign : Ti.UI.TEXT_VERTICAL_ALIGNMENT_BOTTOM,
-		color : "#000",
-		font:{ fontSize: 20, fontWeight: "bold"},
-		text : "RIGURGITO"
+		right: 25,
+		textAlign : Ti.UI.TEXT_ALIGNMENT_CENTER
 	}));
-	this.chkRigurgito = Ti.UI.createSwitch({
-		top: 320,
-		right : 25
-	});
-	this.chkRigurgito.addEventListener('change', function(ea){
-		that.setEdited();
-		that.rigurgito = ea.value;
-	});
-	this.contanier.add(this.chkRigurgito);
 	
 	this.contanier.add(Ti.UI.createLabel({
 		top : 360,
@@ -226,10 +217,31 @@ function SintomoView() {
 		verticalAlign : Ti.UI.TEXT_VERTICAL_ALIGNMENT_BOTTOM,
 		color : "#000",
 		font:{ fontSize: 20, fontWeight: "bold"},
+		text : "RIGURGITO"
+	}));
+	this.chkRigurgito = Ti.UI.createSwitch({
+		top: 360,
+		right : 25
+	});
+	this.chkRigurgito.addEventListener('change', function(ea){
+		that.setEdited();
+		that.rigurgito = ea.value;
+	});
+	this.contanier.add(this.chkRigurgito);
+	
+	this.contanier.add(Ti.UI.createLabel({
+		top : 400,
+		height : 30,
+		left : 25,
+		right : 0,
+		textAlign : Ti.UI.TEXT_ALIGNMENT_LEFT,
+		verticalAlign : Ti.UI.TEXT_VERTICAL_ALIGNMENT_BOTTOM,
+		color : "#000",
+		font:{ fontSize: 20, fontWeight: "bold"},
 		text : "AGITAZIONE"
 	}));
 	this.chkAgitazione = Ti.UI.createSwitch({
-		top: 360,
+		top: 400,
 		right : 25
 	});
 	this.chkAgitazione.addEventListener('change', function(ea){

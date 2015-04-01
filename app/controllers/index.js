@@ -59,7 +59,7 @@ function openInfo(ea){
 
 $.index.addEventListener('open', function (ea) {
 	var firstStart = Ti.App.Properties.getBool("first_app_start", true);
-	if (firstStart || true) { //TODO
+	if (firstStart) {
 		// Disclaymer
 		var dialog = new AgreementView();
 		

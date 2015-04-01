@@ -8,17 +8,24 @@
 			backgroundImage : "/images/icon-rimedi.png"
 		},
 	".titleItem":{
-		color : "#E46A74",
+		color : "#BE5B63",
 		backgroundColor : "#ccc",
 		height : 20,
 		font:{ fontSize: 18, fontWeight: "bold"}
-	}
+	},
 	".listItemMain":{
-		color : "#E46A74",
+		color : "#BE5B63",
 		backgroundColor : "#ededed",
 		font:{ fontSize: 26, fontWeight: "bold"}
-	}
+	},
+	".titleItem2":{
+		color : "#E7878F",
+		backgroundColor : "#ddd",
+		height : 20,
+		font:{ fontSize: 18, fontWeight: "bold"}
+	},
 	".listItem":{
-		color : "#E46A74",
+		color : "#E7878F",
+		backgroundColor : "#f5f5f5",
 		font:{ fontSize: 26, fontWeight: "bold"}
 	}
