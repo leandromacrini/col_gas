@@ -23,7 +23,7 @@ function openSintomi(){
 	
 	$.pagesGuida.scrollToView(1);
 	$.detailImageGuida.image = "/images/baby-2.jpg";
-	$.detailTextGuida.text = "Si presentano con crisi di pianto (più o meno sempre nello stesso momento della giornata), accompagnate da rigurgito ed agitazione.";
+	$.detailTextGuida.text = "Si presentano con crisi di pianto (più o meno sempre nello stesso momento della giornata), che possono essere accompagnate da rigurgito ed agitazione.";
 };
 
 function openCause(){

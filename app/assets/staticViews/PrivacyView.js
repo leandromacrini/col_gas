@@ -1,13 +1,13 @@
 // 
-//  AgreementView.js
+//  PrivacyView.js
 //  Coliche Gassose
 //  
-//  Created by Leandro Macrini on 2015-03-05.
+//  Created by Leandro Macrini on 2015-04-15.
 //  Copyright 2015 Leandro Macrini. All rights reserved.
-//
+// 
 
-var agreement = require("/legals/agreement").agreement;
-function AgreementView(){
+var terms = require("/legals/terms").terms;
+function PrivacyView(){
 	var that = this;
 	
 	// components
@@ -25,11 +25,11 @@ var agreement = require("/legals/agreement").agreement;
 	});
 	this.me.add(this.scroll);
 	
-	for(var i = 0; i < agreement.length; i++){
-		switch(agreement[i].type){
+	for(var i = 0; i < terms.length; i++){
+		switch(terms[i].type){
 			case "title":
 					this.scroll.add(Ti.UI.createLabel({
-						text: agreement[i].text,
+						text: terms[i].text,
 						textAlign : 'center',
 						font:{ fontSize: 16, fontWeight: "bold"},
 						color : '#000',
@@ -40,7 +40,7 @@ var agreement = require("/legals/agreement").agreement;
 				break;
 			case "content":
 					this.scroll.add(Ti.UI.createLabel({
-						text: agreement[i].text,
+						text: terms[i].text,
 						textAlign : 'center',
 						font:{ fontSize: 12, fontWeight: "normal"},
 						color : '#000',
@@ -51,6 +51,26 @@ var agreement = require("/legals/agreement").agreement;
 				break;
 		}
 	}
+	
+	this.scroll.add(Ti.UI.createLabel({
+		text: "ATTENZIONE",
+		textAlign : 'center',
+		font:{ fontSize: 16, fontWeight: "bold"},
+		color : '#000',
+		bottom: 5,
+		left : 5,
+		right : 5
+	}));
+	
+	this.scroll.add(Ti.UI.createLabel({
+		text: "Per i prossimi accessi queste informazioni sono contenute nella sezione INFO della APP.",
+		textAlign : 'center',
+		font:{ fontSize: 12, fontWeight: "normal"},
+		color : '#000',
+		bottom: 10,
+		left : 5,
+		right : 5
+	}));
 
 	//footer
 	this.footer = Ti.UI.createView({
@@ -68,16 +88,15 @@ var agreement = require("/legals/agreement").agreement;
 		font:{ fontSize: 24, fontWeight: "bold"},
 		color : '#FFF',
 		center: {x : "50%", y: "50%"},
-		title : "ACCETTO"
+		title : "OK"
 	});
 	this.btnOk.addEventListener("singletap", function(e){
 		that.close();
 	});
 	this.footer.add(this.btnOk);
 	
-	this.open = function(parent, closeCallback){
+	this.open = function(parent){
 		that.parent = parent;
-		that.closeCallback = closeCallback;
 		
 		if(OS_IOS){
 			// show me
@@ -102,13 +121,11 @@ var agreement = require("/legals/agreement").agreement;
 		if(OS_IOS){
 			that.me.animate({ opacity : 0, duration : 250}, function(e){
 				that.parent.remove(that.me);
-				if(that.closeCallback) that.closeCallback();
 			});
 		} else {
 			that.parent.remove(that.me);
-			if(that.closeCallback) that.closeCallback();
 		}
 	};
 }
 
-exports.AgreementView = AgreementView;
+exports.PrivacyView = PrivacyView;

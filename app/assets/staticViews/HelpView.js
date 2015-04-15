@@ -17,7 +17,9 @@
 		top: 20,
 		left: 10,
 		right: 10,
-		bottom : 60
+		bottom : 60,
+		showPagingControl : true,
+		pagingControlColor : "#f5866c"
 	});
 	this.me.add(this.scroll);
 	var views = [];

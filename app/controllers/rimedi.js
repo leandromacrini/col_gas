@@ -96,7 +96,7 @@ function openCosaFare(){
 		width : "95%",
 		color: "#999",
 		font:{ fontSize: 20},
-		text: "Cercare aiuto e collaborazione tra parenti e amici o di una baby-sitter. Se la madre si trova a gestire il problema da sola o con scarsi risultati, tendenzialmente accentuerà la situazione, deteriorando il rapporta con il bambino."
+		text: "Cercare aiuto e collaborazione tra parenti e amici o di una baby-sitter. Se la madre si trova a gestire il problema da sola o con scarsi risultati, tendenzialmente accentuerà la situazione, deteriorando il rapporto con il bambino."
 	}));
 	
 	$.detailRimedi.add(Ti.UI.createLabel({
@@ -104,7 +104,7 @@ function openCosaFare(){
 		width : "95%",
 		color: "#999",
 		font:{ fontSize: 20},
-		text: "È indispensabile che la mamma abbia un po’ di relax e di riposo: il neonato con le coliche, nella maggior parte sei casi, può essere facilmente aiutato da una mamma efficiente e rilassata. La mancanza di sonno e lo stress portano spesso ad acuire il problema, difficilmente a risolverlo. E’ importante che la mamma si conceda almeno un’attività che la distragga (ad esempio leggere un libro, fare una passeggiata, mantenersi in contatto con amiche o colleghe)."
+		text: "È indispensabile che la mamma abbia un po’ di relax e di riposo: il neonato con le coliche, nella maggior parte dei casi, può essere facilmente aiutato da una mamma efficiente e rilassata. La mancanza di sonno e lo stress portano spesso ad acuire il problema, difficilmente a risolverlo. E’ importante che la mamma si conceda almeno un’attività che la distragga (ad esempio leggere un libro, fare una passeggiata, mantenersi in contatto con amiche o colleghe)."
 	}));
 	
 	$.detailRimedi.add(Ti.UI.createLabel({
@@ -196,7 +196,7 @@ function openMassaggio(){
 		width : "95%",
 		color: "#999",
 		font:{ fontSize: 20},
-		text: "Prendere dolcemente le ginocchia del bambino, portarle piano a piegarsi verso l’addome e tenerle in quella posizione per alcune secondi."
+		text: "Prendere dolcemente le ginocchia del bambino, portarle piano a piegarsi verso l’addome e tenerle in quella posizione per alcuni secondi."
 	}));
 	
 	$.detailRimedi.add(Ti.UI.createImageView({

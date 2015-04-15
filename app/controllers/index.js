@@ -4,6 +4,7 @@ var rimedi = Alloy.createController("rimedi");
 var calendario = Alloy.createController("calendario");
 
 var AgreementView = require("/staticViews/AgreementView").AgreementView;
+var PrivacyView = require("/staticViews/PrivacyView").PrivacyView;
 var HelpView = require("/staticViews/HelpView").HelpView;
 
 var currentView;
@@ -59,11 +60,15 @@ function openInfo(ea){
 
 $.index.addEventListener('open', function (ea) {
 	var firstStart = Ti.App.Properties.getBool("first_app_start", true);
-	if (firstStart) {
+	if (firstStart || true) {
 		// Disclaymer
 		var dialog = new AgreementView();
 		
-		dialog.open($.index);
+		dialog.open($.index, function(){
+			var dialog = new PrivacyView();
+		
+			dialog.open($.index);
+		});
 	} else {
 		Alloy.Controllers.PushNotificationController.registerForPushNotification();
 	}
